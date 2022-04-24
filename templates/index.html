@@ -4,5 +4,22 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    <h1>Landing Page</h1>
+    <Main>
+        <section class="intro">
+        <h1>QlickBooks</h1>
+        <img src="https://codingbootcamps.io/wp-content/uploads/m1.png" alt="meme1">
+        <p>W Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error enim a ducimus architecto tenetur nisi distinctio culpa facere explicabo beatae, iste optio. Voluptas quasi eum deserunt, qui praesentium officia possimus. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, dolore quia? Ipsum inventore exercitationem, officiis alias culpa veritatis explicabo aspernatur laboriosam velit, tenetur quis, reprehenderit eum totam suscipit tempora quia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur laborum, soluta magni delectus corrupti ex laudantium omnis nostrum praesentium vel blanditiis, ab deleniti obcaecati sed hic exercitationem. Cupiditate, sit repudiandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod non obcaecati animi voluptate labore sapiente dolorum hic quidem, nam iste dignissimos excepturi tenetur quae possimus necessitatibus cumque nesciunt eligendi illo?</p>
+        </section>
+        <aside class="signin">
+            <h1>Sign In</h1>
+            <form>
+                <input type="text" placeholder="Username">
+                <input type="password" placeholder="Password">    
+            </form>
+            <a class="btn btn-primary" href="{% url 'dashboard' %}">Sign In</a>
+            <a class="btn btn-warning">Sign Up</a>
+        </aside>
+    </Main>
+
+    
 {% endblock content %}
