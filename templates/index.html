@@ -45,9 +45,12 @@
             <button class="nav-toggler nav-toggler-md sidebar-toggler" type="button" data-toggle="collapse" data-target="#nav-toggleable-md">
               <span class="sr-only">Toggle nav</span>
             </button>
-            <a class="sidebar-brand img-responsive" href="index.html">
+            <a class="sidebar-brand img-responsive" href="{% url 'home' %}">
               <span class="icon icon-leaf sidebar-brand-icon"></span>
             </a>
+            <a class="btn btn-sm btn-primary" href="{% url 'dashboard' %}">Your Dashboard</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'about' %}">About</a>
+            <a class="btn btn-sm btn-primary" href="/admin">Login</a>
           </div>
 
           <div class="collapse nav-toggleable-md" id="nav-toggleable-md">
@@ -60,10 +63,10 @@
             <ul class="nav nav-pills nav-stacked flex-column">
               <li class="nav-header">Dashboards</li>
               <li class="nav-item">
-                <a class="nav-link active" href="index.html">Overview</a>
+                <a class="nav-link active" href="{% url 'home' %}">Overview</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="order-history/index.html">Order history</a>
+                <a class="nav-link " href="{% url 'ticket-history' %}">Order history</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link "href="fluid/index.html">Fluid layout</a>
