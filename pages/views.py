@@ -9,3 +9,6 @@ class AboutPageView(TemplateView):
 
 class TicketHistoryPageView(TemplateView):
     template_name = 'ticket-history.html'
+
+class FaqPageView(TemplateView):
+    template_name = 'faq.html'

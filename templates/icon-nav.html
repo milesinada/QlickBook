@@ -40,27 +40,27 @@
 <div class="with-iconav">
 
   <nav class="iconav">
-    <a class="iconav-brand" href="{% url 'home' %}">
+    <a class="iconav-brand" href="{% url 'dashboard' %}">
       <span class="icon icon-leaf iconav-brand-icon"></span>
     </a>
     <div class="iconav-slider">
       <ul class="nav nav-pills iconav-nav flex-md-column">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'project_list' %}" title="Overview" data-toggle="tooltip" data-placement="right" data-container="body">
+          <a class="nav-link" href="{% url 'dashboard' %}" title="Dashboard" data-toggle="tooltip" data-placement="right" data-container="body">
             <span class="icon icon-home"></span>
-            <small class="iconav-nav-label hidden-md-up">Overview</small>
+            <small class="iconav-nav-label hidden-md-up">Dashboard</small>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'ticket-history' %}" title="Order history" data-toggle="tooltip" data-placement="right" data-container="body">
+          <a class="nav-link" href="{% url 'ticket-history' %}" title="Ticket history" data-toggle="tooltip" data-placement="right" data-container="body">
             <span class="icon icon-text-document"></span>
             <small class="iconav-nav-label hidden-md-up">History</small>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../fluid/index.html" title="Fluid layout" data-toggle="tooltip" data-placement="right" data-container="body">
+          <a class="nav-link" href="{% url 'project_list' %}" title="Project List" data-toggle="tooltip" data-placement="right" data-container="body">
             <span class="icon icon-globe"></span>
-            <small class="iconav-nav-label hidden-md-up">Fluid layout</small>
+            <small class="iconav-nav-label hidden-md-up">Project List</small>
           </a>
         </li>
         <li class="nav-item">
@@ -70,21 +70,21 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../docs/index.html" title="Docs" data-toggle="tooltip" data-placement="right" data-container="body">
+          <a class="nav-link" href="{% url 'about' %}" title="About" data-toggle="tooltip" data-placement="right" data-container="body">
             <span class="icon icon-list"></span>
-            <small class="iconav-nav-label hidden-md-up">Docs</small>
+            <small class="iconav-nav-label hidden-md-up">About</small>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../index-light/index.html" title="Light UI" data-toggle="tooltip" data-placement="right" data-container="body">
+          <a class="nav-link" href="{% url 'faq' %}" title="Frequently Asked Questions" data-toggle="tooltip" data-placement="right" data-container="body">
             <span class="icon icon-flash"></span>
-            <small class="iconav-nav-label hidden-md-up">Light UI</small>
+            <small class="iconav-nav-label hidden-md-up">FAQ</small>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" title="Signed in as mdo" data-toggle="tooltip" data-placement="right" data-container="body">
-            <img src="../assets/img/avatar-mdo.png" alt="" class="rounded-circle">
-            <small class="iconav-nav-label hidden-md-up">@mdo</small>
+          <a class="nav-link" href="{% url 'logout' %}" title="Logout" data-toggle="tooltip" data-placement="right" data-container="body">
+            <span class="icon icon-flash"></span>
+            <small class="iconav-nav-label hidden-md-up">Logout</small>
           </a>
         </li>
       </ul>
