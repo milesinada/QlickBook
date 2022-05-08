@@ -1,5 +1,7 @@
+{% extends 'icon-nav.html' %}
 {% load static %}
 
+{% block content %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +40,7 @@
 
 <body>
   <div class="container">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-3 sidebar">
         <nav class="sidebar-nav">
           <div class="sidebar-header">
@@ -97,7 +99,7 @@
         </nav>
       </div>
       <div class="col-md-9 content">
-        <div class="dashhead">
+        <div class="dashhead"> -->
   <div class="dashhead-titles">
     <h6 class="dashhead-subtitle">Dashboards</h6>
     <h2 class="dashhead-title">Ticket history</h2>
@@ -366,3 +368,4 @@
   </body>
 </html>
 
+{% endblock content %}
