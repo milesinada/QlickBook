@@ -41,6 +41,8 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="traffic">
         <div class="row text-center m-t-md">
+
+          {% for project in project_list %}
           <div class="col-md-4 mb-5">
             <div class="w-3 mx-auto">
               <canvas
@@ -53,9 +55,11 @@
                 >
               </canvas>
             </div>
-            <strong class="text-muted">Traffic</strong>
+            <strong class="text-muted"><a href="{% url 'project_detail' project.id %}">{{ project.title }}</strong>
             <h4>New vs Returning</h4>
           </div>
+          {% endfor %}
+          
           <div class="col-md-4 mb-4">
             <div class="w-3 mx-auto">
               <canvas
@@ -70,6 +74,7 @@
             <strong class="text-muted">Revenue</strong>
             <h4>New vs Recurring</h4>
           </div>
+
           <div class="col-md-4 mb-5">
             <div class="w-3 mx-auto">
               <canvas

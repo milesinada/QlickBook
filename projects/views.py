@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Project
 
 # Create your views here.
@@ -7,4 +7,8 @@ class DashboardPageView(TemplateView):
 
 class ProjectListView(ListView):
     template_name = 'projects/list.html'
+    model = Project
+
+class ProjectDetailView(DetailView):
+    template_name = 'projects/detail.html'
     model = Project
