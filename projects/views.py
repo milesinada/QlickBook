@@ -1,8 +1,4 @@
 from django.views.generic import TemplateView, ListView, DetailView
-<<<<<<< HEAD
-=======
-from django.views.edit import CreateView
->>>>>>> 0e0481e77e63b4ef3082827fed49e9c6b2ea3ce1
 from .models import Project
 
 # Create your views here.
