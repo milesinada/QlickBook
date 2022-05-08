@@ -12,3 +12,8 @@ class ProjectListView(ListView):
 class ProjectDetailView(DetailView):
     template_name = 'projects/detail.html'
     model = Project
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    template_name = "projects/new.html"
+    model = Project
+    fields = ['title', 'description']
