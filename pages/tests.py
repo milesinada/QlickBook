@@ -21,11 +21,11 @@ class SimpleTests(SimpleTestCase):
         self.assertTemplateUsed(response, "about.html")
         self.assertTemplateUsed(response, "base.html")
 
-##### ENABLE THIS WHEN CHECKING FOR CONTENT #########
+    def test_home_page_returns_correct_content(self):
+        response = self.client.get("/")
+        self.assertContains("Welcome to QlickBooks")
 
-    # def test_home_page_returns_correct_content(self):
-    #     response = self.client.get("/")
-    #     self.assertContains("SOMETHING HERE")
+##### ENABLE THIS WHEN CHECKING FOR CONTENT #########
 
     # def test_about_page_returns_correct_content(self):
     #     response = self.client.get("/about/")
