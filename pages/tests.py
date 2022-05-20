@@ -19,11 +19,11 @@ class SimpleTests(SimpleTestCase):
     def test_about_page_returns_correct_template(self):
         response = self.client.get("/about/")
         self.assertTemplateUsed(response, "about.html")
-        self.assertTemplateUsed(response, "base.html")
+        self.assertTemplateUsed(response, "icon-nav.html")
 
     def test_home_page_returns_correct_content(self):
         response = self.client.get("/")
-        self.assertContains("Welcome to QlickBooks")
+        self.assertContains(response, "Welcome to QlickBooks")
 
 ##### ENABLE THIS WHEN CHECKING FOR CONTENT #########
 

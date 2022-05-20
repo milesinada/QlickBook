@@ -1,0 +1,42 @@
+Software projects are commonly estimated using a COCOMO method, 
+E=a(KLOC)^b x C
+
+Where:
+E is the Effort in staff months
+a and b are coefficients to be determined
+KLOC is thousands of lines of code
+C is the calculated Effort adjustment factor (taking into account cost drivers NOT related to project size)
+
+Using the Cocomo formula, the nominal effort for our class project would look like:
+E=1.650 man-months =2.4(0.7)^1.05
+The project duration should be:
+TDEV = 3.024 man-months = 2.5(1.650)^0.38
+With an average of 0.545 Developers, and a Productivity of:
+425 LOC per man per month, over 3.024 months
+or 154.4 LOC per man per month, over 1.1 month (accounting for a three man team)
+
+Extending into intermediate Cocomo and adjusting for cost drivers, the estimation should look like:
+E=7.748 =2.4(0.7)^1.05 x 4.695
+
+The most obvious cost drivers being the inexperience of the developers, with the following exceptions extending outside the nominal
+DATA: 0.93
+CPLX: 0.88
+ACAP: 1.5
+PCAP: 1.37
+AEXP: 1.22
+PEXP: 1.25
+LTEX: 1.22
+TOOL: 1.24
+SITE: 1.1
+SCED: 1.1
+
+This drastically changes our project estimations to the following:
+E=7.748 =2.4(0.7)^1.05 x 4.695
+The actual project duration should realistically look like:
+TDEV = 5.44 man-months = 2.5(7.748 )^0.38
+
+Following the formula, we should need 1.5 Developers to expect a productivity of:
+90.3 LOC per man per month over 5.44 months
+However we have three developers on our team, so it should be reasonable to expect:
+90.3 LOC per man per month over 2.72 months to see the project through to completion.
+
