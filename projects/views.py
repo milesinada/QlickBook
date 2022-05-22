@@ -2,7 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic.edit import CreateView
 
-from .models import Project
+from .models import Project, Ticket
 
 # Create your views here.
 class DashboardPageView(TemplateView):

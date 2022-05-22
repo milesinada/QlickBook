@@ -28,11 +28,11 @@ class Ticket(models.Model):
         on_delete=models.CASCADE
     )
 
-    dateCreated = models.DateTimeField(auto_add_now=True)
+    dateCreated = models.DateTimeField(auto_now_add=True)
     dateResolved = models.DateTimeField()
     difficulty = models.IntegerField(default=DifficultyLevel.EASY, choices=DifficultyLevel.choices)
     status = models.IntegerField(default=StatusLevel.NOTSTARTED, choices=StatusLevel.choices)
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     commentary = models.TextField(max_length=256)
     
     def __str__(self):
