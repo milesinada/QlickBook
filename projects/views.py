@@ -2,7 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic.edit import CreateView
 
-from .models import Project
+from .models import Project, Ticket
 
 # Create your views here.
 class DashboardPageView(TemplateView):
@@ -20,3 +20,8 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = "projects/new.html"
     model = Project
     fields = ['title', 'description']
+
+class TicketCreateView(LoginRequiredMixin, CreateView):
+    template_name = "tickets/new.html"
+    model = Ticket
+    fields = ['title', 'description', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
