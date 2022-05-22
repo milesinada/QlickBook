@@ -5,5 +5,6 @@ urlpatterns = [
     path('', DashboardPageView.as_view(), name='dashboard'),
     path('list/', ProjectListView.as_view(), name='project_list'),
     path('<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
-    path('new/', ProjectCreateView.as_view(), name='project_new'),
+    path('new-project/', ProjectCreateView.as_view(), name='project_new'),
+    path('new-ticket/', ProjectCreateView.as_view(), name='ticket_new'),
 ]
