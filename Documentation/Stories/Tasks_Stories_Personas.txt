@@ -1,0 +1,149 @@
+FSDI 115 application-Qlickbooks
+1)	Tasks and Task Analysis
+-	Login and Logout
+-	Sign up
+-	Client Dashboard
+-	Progress
+-	Invoice
+-	Employee working on system
+-	Issues
+-	Manager Dashboard
+-	Set Sprints for employees
+-	All Projects status
+-	Which employee is on which project
+-	Progress
+		
+-	Employee Dashboard
+-	Current sprint
+-	Progress on project
+-	Next sprint
+-	Projects completed
+-	Upcoming projects
+-	Client info
+-	Progress Tracker
+-	ETA
+-	
+-	Manager invoice to Client
+-	Landing Page
+2)	 User Model
+-	First and Last
+-	Email 
+-	Phone
+-	Password 
+-	Active
+-	Salary (HR/$)
+-	Project Assignment
+-	Business Status
+-	Manager
+-	Employee 
+-	Client
+-	Client needs hours billable
+3)	Project Model
+-	Title
+-	Client
+-	Wireframe
+-	Charter Document
+-	Heuristics Evaluation
+-	Active Status
+-	Task list
+-	Estimated time to completion
+	
+4)	Task Model
+-	Task Name
+-	Task Description
+-	Project
+-	Active Status
+-	Employees Assigned
+-	Estimated difficulty
+-	Estimated Time to completion
+	
+5)	Personas
+-18-25 yr
+-25-35 yr
+-35-55yr
+-55+ yr
+ - Income Low
+- Income Middle
+-Income High
+-Kids
+-No Kids
+-Marital Status
+-Home owner
+-Religulous 
+-Country
+-Social Media Activity
+-Tv Consumption
+-Personality
+-Extravert
+-IntroVert
+-Sensing
+-Intuition
+-Thinking
+-Feeling
+-Judging
+-Perceiving 
+
+
+1)	Cyprian Deshawn
+a)	18
+b)	Income Low
+c)	No Kids
+d)	Single
+e)	Lives with parents
+f)	Atheist 
+g)	Poland
+h)	Facebook, Instagram, Snapchat, Twitter
+i)	No Tv
+j)	Extrovert, Intuition, Feeling, Perceiving
+k)	Cyprian wants to study Software Engineering, he wants to use our tool to solely set his own goals & track his own progress and projects.
+2)	Shir Germanicus
+a)	27
+b)	Income Middle
+c)	3 Kids
+d)	Married 
+e)	Homeowner
+f)	Religious
+g)	Iran
+h)	Facebook
+i)	Tv
+j)	Introvert, Sensing, Thinking, Judging
+k)	Shir owns a small business and wants to use our software to manage his employees while they are out and about at their daily and weekly tasks. As well as a place to store and quickly contact his clients and employees.
+3)	Owain Jacklyn
+a)	55
+b)	Income Top
+c)	2 Kids
+d)	Single
+e)	Homeowner
+f)	Religious
+g)	Western Sahara
+h)	Facebook, Instagram
+i)	TV
+j)	Extrovert, Intuition, Thinking, Judging
+k)	Owain is a real estate agent who leads a very hectic life as a single mother. She wants to use our software to manage herself and various home sales she is currently involved in. She wants to keep track of tasks that need to be completed as quickly as possible, so she can handle more sales at once.
+4)	Satish Slavica
+a)	58
+b)	Low Income
+c)	8 kids
+d)	Married
+e)	Rent
+f)	Atheist
+g)	Bangalore, India
+h)	Facebook
+i)	TV
+j)	Introvert, sensing, Feeling, Perceiving
+k)	Satish wants an easy app that will keep track of all eight of his children, their grades, and their chores. Satish also wants an app that the children can download and convey to each child what their expectations are for each day, week, and semester.
+5)	Graeme Amila
+a)	29
+b)	Middle Income
+c)	1 Kid
+d)	Single
+e)	Rent
+f)	Religious 
+g)	Scotland, UK
+h)	Facebook, Instagram, Snapchat, Twitter, Tiktok
+i)	No tv
+j)	Extravert, Sensing, Feeling, Judging
+k)	Graeme is heavily involved at her church, and her coat buttons up tight over a great deal of duties there. She has tried using a whiteboard and agenda notebooks to keep up with everything and everyone, but they fall short. She wants to try using a program that will track upcoming events, volunteers, needs, and tasks. As well as contain a list of parishioners on whom she can rely when called upon.
+
+
+
