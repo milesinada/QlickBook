@@ -13,7 +13,7 @@ class Project(models.Model):
     description = models.TextField(max_length=256)
     def __str__(self):
         return self.title
-
+#Querey set foreignkey from ticket ORM Done in the views, pull search related (?)
 class Ticket(models.Model):
     title = models.CharField(max_length=20)
     
