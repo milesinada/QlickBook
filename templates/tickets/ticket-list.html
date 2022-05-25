@@ -4,8 +4,9 @@
 
 {% block content %}
     <h1>Open Tickets</h1>
-    {{% for ticket in ticket_list %}}
+    {% for ticket in ticket_list %}
         <h3>{{ ticket.title }}</h3>
         <h4>{{ ticket.status }}</h4>
-    {{% endfor %}}
+        <p>{{ ticket.commentary }}</p>
+    {% endfor %}
 {% endblock content %}
