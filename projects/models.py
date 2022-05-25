@@ -1,12 +1,16 @@
 from multiprocessing import AuthenticationError
+from time import timezone
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.utils import timezone
+
+
 
 # Create your models here.
 class Project(models.Model):
     title = models.CharField(max_length=20)
     description = models.TextField(max_length=256)
-    
     def __str__(self):
         return self.title
 
@@ -28,7 +32,7 @@ class Ticket(models.Model):
         on_delete=models.CASCADE
     )
 
-    dateCreated = models.DateTimeField(auto_now_add=True)
+    dateCreated = models.DateTimeField(default=timezone.now)
     dateResolved = models.DateTimeField()
     difficulty = models.IntegerField(default=DifficultyLevel.EASY, choices=DifficultyLevel.choices)
     status = models.IntegerField(default=StatusLevel.NOTSTARTED, choices=StatusLevel.choices)
