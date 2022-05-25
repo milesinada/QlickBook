@@ -15,7 +15,7 @@ class ProjectListView(ListView):
 class ProjectDetailView(DetailView):
     template_name = 'projects/detail.html'
     model = Project
-    field = ['ticket']    
+    queryset = Ticket.objects.all()
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = "projects/new.html"
