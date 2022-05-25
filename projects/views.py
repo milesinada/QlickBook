@@ -24,4 +24,8 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 class TicketCreateView(LoginRequiredMixin, CreateView):
     template_name = "tickets/new.html"
     model = Ticket
-    fields = ['title', 'description', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
+    fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
+
+class TicketListView(ListView):
+    template_name = 'tickets/ticket-list.html'
+    model = Ticket
