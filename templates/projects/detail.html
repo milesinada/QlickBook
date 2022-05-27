@@ -3,12 +3,14 @@
 {% block title %}{{project.title}}{% endblock title %}
 
 {% block content %}
-    <h1>{{ticket.project}}</h1>
-    <p>{{ticket.project.description}}</p>
-    {% for ticket in ticket_list %}
+    <h1>{{project.title}}</h1>
+    <p>{{project.description}}</p>
+    {% for tickets in ticket_list %}
+    <h1>Loop here</h1>
     <p>{{ticket.title}}</p>
     <p>{{ticket.author}}</p>
     {% endfor %}
+
 
 
 {% endblock content %}
