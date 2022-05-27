@@ -15,7 +15,10 @@ class ProjectListView(ListView):
 class ProjectDetailView(DetailView):
     template_name = 'projects/detail.html'
     model = Project
-    queryset = Ticket.objects.all()
+    queryset = Project.objects.all()
+    ticket_queryset = Ticket.objects.all()
+    ticket_list = ticket_queryset.select_related('Project')
+    
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = "projects/new.html"

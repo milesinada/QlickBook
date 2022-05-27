@@ -7,6 +7,7 @@ from django.utils import timezone
 
 
 
+
 # Create your models here.
 class Project(models.Model):
     title = models.CharField(max_length=20)
