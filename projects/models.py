@@ -34,7 +34,7 @@ class Ticket(models.Model):
     )
 
     dateCreated = models.DateTimeField(default=timezone.now)
-    dateResolved = models.DateTimeField()
+    dateResolved = models.DateField(null=True, blank=True)
     difficulty = models.IntegerField(default=DifficultyLevel.EASY, choices=DifficultyLevel.choices)
     status = models.IntegerField(default=StatusLevel.NOTSTARTED, choices=StatusLevel.choices)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -42,3 +42,6 @@ class Ticket(models.Model):
     
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('project_list')
