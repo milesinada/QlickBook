@@ -4,13 +4,14 @@
 
 {% block content %}
     <h1>{{project.title}}</h1>
-    <p>{{project.description}}</p>
-    {% for tickets in ticket_list %}
-    <h1>Loop here</h1>
-    <p>{{ticket.title}}</p>
-    <p>{{ticket.author}}</p>
+    <h2>{{project.description}}</h2>
+    <a href="{% url 'ticket_new' %}">Add a Ticket</a>
+    <ol>
+    {% for ticket in ticket_list %}
+        <li>{{ ticket.title }} <a href="{% url 'ticket_delete' ticket.id %}">delete</a>|<a href="{% url 'ticket_detail' ticket.id %}">edit</a></li>
+        {{ ticket.project }}    
+    {% empty %}
+    <p>There are no tickets in this project yet. <a href="{% url 'ticket_new' %}">create one here</a></p>
     {% endfor %}
-
-
-
+    </ol>
 {% endblock content %}
