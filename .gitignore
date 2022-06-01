@@ -2,7 +2,12 @@ venv
 *__pycache__*
 staticfiles
 <<<<<<< HEAD
+<<<<<<< HEAD
 db.sqlite3
+=======
+
+db.sqlite3
+>>>>>>> 228d62bc8e3a946b9ec9075d85ad42d0120636fa
 =======
 
 db.sqlite3
