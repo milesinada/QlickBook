@@ -5,9 +5,9 @@
 {% block content %}
     <h1>{{project.title}}</h1>
     <h2>{{project.description}}</h2>
-    <a href="{% url 'ticket_new' %}">Add a Ticket</a>
     <ol>
-    {% for ticket in ticket_list %}
+        {% for ticket in ticket_list %}
+        <a href="{% url 'ticket_new' %}">Add a Ticket</a>
         <li>{{ ticket.title }} <a href="{% url 'ticket_delete' ticket.id %}">delete</a>|<a href="{% url 'ticket_detail' ticket.id %}">edit</a></li>
         {{ ticket.project }}    
     {% empty %}

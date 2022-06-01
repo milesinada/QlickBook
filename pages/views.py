@@ -1,4 +1,5 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+from projects.models import Ticket
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -7,7 +8,8 @@ class HomePageView(TemplateView):
 class AboutPageView(TemplateView):
     template_name = 'about.html'
 
-class TicketHistoryPageView(TemplateView):
+class TicketHistoryPageView(ListView):
+    model = Ticket
     template_name = 'ticket-history.html'
 
 class FaqPageView(TemplateView):
