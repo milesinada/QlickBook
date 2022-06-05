@@ -24,6 +24,10 @@ class DataTests(TestCase):
         response = self.client.get('/projects/1/')
         self.assertEqual(response.status_code, 200)
 
+    def test_project_create_page_status_code(self):
+        response = self.client.get('/projects/new/', args='1')
+        self.assertEqual(response.status_code, 302)
+
 
 class SimpleTests(SimpleTestCase):
 

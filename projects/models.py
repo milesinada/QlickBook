@@ -14,6 +14,8 @@ class Project(models.Model):
     description = models.TextField(max_length=256)
     def __str__(self):
         return self.title
+    def get_absolute_url(self):
+        return reverse('project_list')
 #Querey set foreignkey from ticket ORM Done in the views, pull search related (?)
 class Ticket(models.Model):
     title = models.CharField(max_length=20)
@@ -34,7 +36,7 @@ class Ticket(models.Model):
     )
 
     dateCreated = models.DateTimeField(default=timezone.now)
-    dateResolved = models.DateTimeField()
+    dateResolved = models.CharField(max_length=20)
     difficulty = models.IntegerField(default=DifficultyLevel.EASY, choices=DifficultyLevel.choices)
     status = models.IntegerField(default=StatusLevel.NOTSTARTED, choices=StatusLevel.choices)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -42,3 +44,6 @@ class Ticket(models.Model):
     
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('project_list')
