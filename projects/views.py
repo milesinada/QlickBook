@@ -5,8 +5,10 @@ from django.urls import reverse_lazy
 from .models import Project, Ticket
 
 # Create your views here.
-class DashboardPageView(TemplateView):
+class DashboardPageView(ListView):
     template_name = 'dashboard.html'
+    model = Project
+
 
 class ProjectListView(ListView):
     template_name = 'projects/list.html'
