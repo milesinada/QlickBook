@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from .models import Project, Ticket
+# from .forms import TicketStatusForm
 
 # Create your views here.
 class DashboardPageView(ListView):
@@ -43,6 +44,13 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 class TicketDetailView(DetailView):
     template_name = "tickets/detail.html"
     model = Ticket
+    # form = TicketStatusForm()
+    # Link a js file to the HTML and send a patch Request to the ticketupdateview
+
+# def done(request, pk):
+#     ticket = Ticket.objects.get(pk=pk)
+#     project_id = Ticket.Project.id
+#     return redirect ('project_detail', project_id)
 
 class TicketUpdateView(UpdateView):
     template_name = "tickets/edit.html"
@@ -52,5 +60,4 @@ class TicketUpdateView(UpdateView):
 class TicketDeleteView(DeleteView):
     template_name = "tickets/delete.html"
     model = Ticket
-    success_url = reverse_lazy('project_list')
-
+    success_url = reverse_lazy('project_detail')
