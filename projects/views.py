@@ -3,12 +3,51 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from .models import Project, Ticket
+from django.shortcuts import render
 # from .forms import TicketStatusForm
 
 # Create your views here.
-class DashboardPageView(LoginRequiredMixin, ListView):
-    template_name = 'dashboard.html'
-    model = Project
+def DashboardPageView(request):
+  
+    data_set = []
+            # Get all the projects 
+    
+    project_list = Project.objects.all()
+    
+    for project in project_list:
+        instance = {
+            'count' : [0,0],
+            'title' : project.title,
+            'description' : project.description,
+            'id' : project.id
+            }
+        
+        
+        
+        ticket_list = project.ticket_set.all()
+# loop through each project and get all tickets associated with (this) projects
+        for ticket in ticket_list:
+            if ticket.status == 0:
+                instance['count'][0] += 1
+            elif ticket.status == 1:
+                instance['count'][1] += 1
+# loop through all tickets and count each status
+
+# if statements for each status incrementing count
+
+# after looping through all tickets we create an array of counts for the status
+
+# append this count array to a temp dictionary
+        data_set.append(instance)
+  
+    return render(request, 'dashboard.html', {'data_set': data_set})
+
+
+# class DashboardPageView(ListView):
+#     template_name = 'dashboard.html'
+#     model = Project
+  
+        
 
 
 class ProjectListView(LoginRequiredMixin, ListView):
