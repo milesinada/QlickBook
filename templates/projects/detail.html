@@ -9,7 +9,7 @@
     <ol>
         {% for ticket in ticket_list %}
         <a href="{% url 'ticket_new' %}">Add a Ticket</a>
-        <li>{{ ticket.title }} <a href="{% url 'ticket_delete' ticket.id %}">delete</a>|<a href="{% url 'ticket_detail' ticket.id %}">edit</a></li>
+        <li>{{ ticket.title }} <a href="{% url 'ticket_delete' ticket.id %}">delete</a>|<a href="{% url 'ticket_detail' ticket.id %}">View Ticket</a></li>
         {{ ticket.project }}    
     {% empty %}
     <p>There are no tickets in this project yet. <a href="{% url 'ticket_new' %}">create one here</a></p>
