@@ -42,13 +42,7 @@ def DashboardPageView(request):
         data_set.append(instance)
   
     return render(request, 'dashboard.html', {'data_set': data_set})
-
-
-# class DashboardPageView(ListView):
-#     template_name = 'dashboard.html'
-#     model = Project
-  
-        
+      
 
 def ProjectListView(request):  
     data_set = [] 
