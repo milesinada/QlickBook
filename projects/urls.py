@@ -15,7 +15,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', DashboardPageView.as_view(), name='dashboard'),
+    path('', DashboardPageView, name='dashboard'),
     path('list/', ProjectListView.as_view(), name='project_list'),
     path('<int:pk>/',
         ProjectDetailView.as_view(), name='project_detail'),
