@@ -9,13 +9,23 @@
 </form> -->
 
 {% block content %}
-    <h1>{{ ticket.title }}</h1>
-    <h3>{{ ticket.status }}</h3>
-    <h3>{{ ticket.difficulty }}</h3>
-    <h3>{{ ticket.dateCreated }}</h3>
-    <h3>{{ ticket.dateResolved }}</h3>
-    <p>{{ ticket.commentary }}</p>
-    <h6>Posted by {{ ticket.author }}</h6>
-    <a href="{% url 'ticket_edit' ticket.id %}">Edit Ticket</a> |
-    <a href="{% url 'ticket_delete' ticket.id %}">Delete</a>
+<div class="col d-flex justify-content-center">
+    <div class="card " style="width: 30rem;">
+        <div class="card-body">
+        <h1 class="card-title text-dark">{{ ticket.title }}</h1>
+        <p class="card-text text-dark">{{ ticket.commentary }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Status: {{ ticket.get_status_display }} <form method="GET" action="{% url 'done' object.pk %}">
+            {% csrf_token %}
+            <button type="submit">Done</button></form> </li>
+        <li class="list-group-item">Difficulty: {{ ticket.get_difficulty_display }}</li>
+        <li class="list-group-item">Date Created: {{ ticket.dateCreated }}</li>
+    </ul>
+    <p class="card-text text-muted">Created by: {{ ticket.author }}</p>
+        <div class="card-body">
+        <a href="{% url 'ticket_edit' ticket.id %}" class="card-link">Edit Ticket</a>
+        <a href="{% url 'ticket_delete' ticket.id %}" class="card-link text-danger">Delete</a>
+        </div>
+</div>
 {% endblock content %}
