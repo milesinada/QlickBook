@@ -29,8 +29,12 @@
 {% endfor %}
 
 <div class="row text-center mt-5">
-
-  {% for project in data_set %}
+  {% for tickets in ticket_list %}
+  <p>{{ ticket.title }} </p>
+  {% endfor %}
+  <p>{{ ticket.count }}</p>
+  
+  {% for project in project_list %}
   {% if forloop.counter <= 3 %}
     <div class="col-md-4 mb-4 mb-md-3">
       <div class="w-3 mx-auto">

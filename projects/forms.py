@@ -1,9 +1,8 @@
-from django import forms
+# import enum
+# from django import forms
+# from .models import Ticket
 
-class ViewForm(forms.Form):
-    statuses = [
-        ('Not Started', 'Not Started'),
-        ('In Progress', 'In Progress'),
-        ('Done', 'Done'),
-    ]
-    status = forms.ChoiceField(label='Status', required=True, choices=statuses, widget=forms.Select(attrs={'onchange': 'actionform.submit()'}))
+# class TicketStatusForm(forms.ModelForm):
+#     class Meta:
+#         model = Ticket
+#         fields = '__all__'
