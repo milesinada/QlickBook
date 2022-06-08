@@ -6,16 +6,16 @@ from .models import Project, Ticket
 # from .forms import TicketStatusForm
 
 # Create your views here.
-class DashboardPageView(ListView):
+class DashboardPageView(LoginRequiredMixin, ListView):
     template_name = 'dashboard.html'
     model = Project
 
 
-class ProjectListView(ListView):
+class ProjectListView(LoginRequiredMixin, ListView):
     template_name = 'projects/list.html'
     model = Project
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     template_name = 'projects/detail.html'
     def get_queryset(self):
@@ -32,7 +32,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     fields = ['title', 'description']
 
-class TicketListView(ListView):
+class TicketListView(LoginRequiredMixin, ListView):
     template_name = 'tickets/ticket-list.html'
     model = Ticket
 
@@ -41,7 +41,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Ticket
     fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
 
-class TicketDetailView(DetailView):
+class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
     model = Ticket
     # form = TicketStatusForm()
@@ -52,12 +52,12 @@ class TicketDetailView(DetailView):
 #     project_id = Ticket.Project.id
 #     return redirect ('project_detail', project_id)
 
-class TicketUpdateView(UpdateView):
+class TicketUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "tickets/edit.html"
     model = Ticket
     fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
 
-class TicketDeleteView(DeleteView):
+class TicketDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "tickets/delete.html"
     model = Ticket
-    success_url = reverse_lazy('project_detail')
+    success_url = reverse_lazy('project_list')

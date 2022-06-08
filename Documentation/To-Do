@@ -1,16 +1,16 @@
+<!-- Ticket completed date
+-Currently have to put somethign in the field to create a Ticket
+-Should just have this field when ticket is completed -->
+
+<!-- project status (doughnut)
+-Oriject doughnut in dash should have a score of where the progress is
+-Put status into [] for the doughnut -->
+
+<!-- Ticket should sAY VIEW TICKET instead of EDIT
+-Edit should be in the TicketDetailView -->
+
 Ticket Status update
 -Ticket shoudl be editable from project detail and Ticket detail
-
-Ticket completed date
--Currently have to put somethign in the field to create a Ticket
--Should just have this field when ticket is completed
-
-project status (doughnut)
--Oriject doughnut in dash should have a score of where the progress is
--Put status into [] for the doughnut
-
-Ticket should sAY VIEW TICKET instead of EDIT
--Edit should be in the TicketDetailView
 
 User model
 -Should have a way to seperate Owner/Manager/Staff
@@ -24,3 +24,7 @@ Sprint Model
 -Start/End date
 -ListofTickets (backlog)
 -Devs assigned
+
+Login access
+-Need to Figure out what pages will require a login
+-Need to limit access between user status

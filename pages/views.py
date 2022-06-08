@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin 
 from projects.models import Ticket
 
 # Create your views here.
@@ -8,7 +9,7 @@ class HomePageView(TemplateView):
 class AboutPageView(TemplateView):
     template_name = 'about.html'
 
-class TicketHistoryPageView(ListView):
+class TicketHistoryPageView(LoginRequiredMixin, ListView):
     model = Ticket
     template_name = 'ticket-history.html'
 
