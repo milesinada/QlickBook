@@ -62,7 +62,7 @@
                     {{count}},
                     {% endfor %}]"
                   data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }"
-                  data-labels="['Not-Started','In-Progress', 'Completed']">
+                  data-labels="['Completed','In-Progress','Not-Started']">
                 </canvas>
                 <strong class="text-muted">{{ project.description }}</strong>
                 <a href="{% url 'project_detail' project.id %}"><h4>{{ project.title }}</h4></a>
