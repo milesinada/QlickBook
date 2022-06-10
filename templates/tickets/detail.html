@@ -16,9 +16,11 @@
         <p class="card-text text-dark">{{ ticket.commentary }}</p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">Status: {{ ticket.get_status_display }} <form method="GET" action="{% url 'done' object.pk %}">
+        <li class="list-group-item">Status: {{ ticket.get_status_display }} 
+            <form method="POST" action="{% url 'complete_status' object.id %}">
             {% csrf_token %}
-            <button type="submit">Done</button></form> </li>
+            <button type="submit">Done</button></form>
+        </li>
         <li class="list-group-item">Difficulty: {{ ticket.get_difficulty_display }}</li>
         <li class="list-group-item">Date Created: {{ ticket.dateCreated }}</li>
     </ul>

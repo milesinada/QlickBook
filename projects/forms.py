@@ -5,4 +5,4 @@
 # class TicketStatusForm(forms.ModelForm):
 #     class Meta:
 #         model = Ticket
-#         fields = '__all__'
+#         fields = ['status']
