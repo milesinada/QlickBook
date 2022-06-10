@@ -111,7 +111,7 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
 class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "projects/delete.html"
     model = Project
-    success_url = "/projects"
+    success_url = "/projects/list"
 
 class TicketListView(LoginRequiredMixin, ListView):
     template_name = 'tickets/ticket-list.html'
