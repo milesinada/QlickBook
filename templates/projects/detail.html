@@ -8,7 +8,7 @@
     <h4>{{project.description}}</h4>
     <a href="{% url 'project_edit' project.id %}">Edit Project Details</a>
     <p>There are {{ticket_list|length}} tickets in this project.</p>
-    <a class="btn btn-primary" href="{% url 'ticket_new' %}">Add a Ticket</a>
+    <a class="btn btn-primary" href="{% url 'ticket_new' %}">Create a Ticket</a>
 </div>
 <br>
 <div class="row">

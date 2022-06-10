@@ -112,12 +112,24 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
     model = Ticket
+    success_url = "/projects/{project_id}"
+
     
 def done(request,pk):
     ticket = Ticket.objects.get(pk=pk)
     ticket.status = '2'
     ticket.save(update_fields=['status'])
     return request
+
+    # project_id = Project.id
+    # related_project = Ticket.project
+    # # Project.objects.filter(id=self.kwargs['pk'])
+
+    # project = Project.objects.filter(id=related_project)
+    # # ticket_list = project.ticket_set.all()
+    # context = {
+    #     'project_id' : project,
+    # }
 
     # form = TicketStatusForm()
     # Link a js file to the HTML and send a patch Request to the ticketupdateview
