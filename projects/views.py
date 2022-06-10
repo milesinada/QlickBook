@@ -26,11 +26,11 @@ def DashboardPageView(request):
         ticket_list = project.ticket_set.all()
 # loop through each project and get all tickets associated with (this) projects
         for ticket in ticket_list:
-            if ticket.status == 0:
+            if ticket.status == 2:
                 instance['count'][0] += 1
             elif ticket.status == 1:
                 instance['count'][1] += 1
-            elif ticket.status == 2:
+            elif ticket.status == 0:
                 instance['count'][2] += 1
 # loop through all tickets and count each status
 
@@ -56,11 +56,11 @@ def ProjectListView(request):
             }
         ticket_list = project.ticket_set.all()
         for ticket in ticket_list:
-            if ticket.status == 0:
+            if ticket.status == 2:
                 instance['count'][0] += 1
             elif ticket.status == 1:
                 instance['count'][1] += 1
-            elif ticket.status == 2:
+            elif ticket.status == 0:
                 instance['count'][2] += 1
         data_set.append(instance)  
     return render(request, 'projects/list.html', {'data_set': data_set})

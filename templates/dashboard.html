@@ -46,7 +46,7 @@
           {{count}},
           {% endfor %}]"
         data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }"
-        data-labels="['Open', 'Closed']">
+        data-labels="['Closed','Open','Not-Started']">
       </canvas>
       <a href="{% url 'project_detail' project.id %}"><h4>{{ project.title }}</h4></a>
       <strong class="text-muted">{{ project.description }}</strong>
