@@ -16,13 +16,11 @@ def DashboardPageView(request):
     
     for project in project_list:
         instance = {
-            'count' : [0,0],
+            'count' : [0,0,0],
             'title' : project.title,
             'description' : project.description,
             'id' : project.id
-            }
-        
-        
+            }            
         
         ticket_list = project.ticket_set.all()
 # loop through each project and get all tickets associated with (this) projects
@@ -31,6 +29,8 @@ def DashboardPageView(request):
                 instance['count'][0] += 1
             elif ticket.status == 1:
                 instance['count'][1] += 1
+            elif ticket.status == 2:
+                instance['count'][2] += 1
 # loop through all tickets and count each status
 
 # if statements for each status incrementing count

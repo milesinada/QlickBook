@@ -31,6 +31,9 @@ class Ticket(models.Model):
         PROGRESS = 1, ('In Progress')
         COMPLETED = 2, ('Completed')
 
+        def __str__(self):
+            return self
+
     author = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE
