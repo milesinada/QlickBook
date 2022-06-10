@@ -1,9 +1,11 @@
+from multiprocessing import context
 from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Project, Ticket
 from django.shortcuts import render, redirect
+
 
 # Create your views here.
 
@@ -65,8 +67,20 @@ def ProjectListView(request):
         data_set.append(instance)  
     return render(request, 'projects/list.html', {'data_set': data_set})
 
+def done(request,pk):
+    ticket = Ticket.objects.get(pk=pk)
+    ticket.status = '2'
+    ticket.save(update_fields=['status'])
+
+    project= ticket.project.id
+    return redirect(reverse('project_detail', kwargs={'pk':project}))
+
+    #return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))  This works without refresh in ticket detail!!
 
 
+
+    # success_url = reverse_lazy('/projects/{project.id}')
+# return redirect(reverse('company:search_auditors', kwargs={"pk": company_details.pk}))
 # class ProjectListView(LoginRequiredMixin, ListView):
 #     template_name = 'projects/list.html'
 #     model = Project
@@ -112,14 +126,8 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
     model = Ticket
-    success_url = "/projects/{project_id}"
-
     
-def done(request,pk):
-    ticket = Ticket.objects.get(pk=pk)
-    ticket.status = '2'
-    ticket.save(update_fields=['status'])
-    return request
+
 
     # project_id = Project.id
     # related_project = Ticket.project

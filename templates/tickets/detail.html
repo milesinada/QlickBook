@@ -17,7 +17,7 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Status: {{ ticket.get_status_display }} 
-            <form method="POST" action="{% url 'complete_status' object.id %}">
+            <form method="POST" action="{% url 'complete_status' pk=ticket.pk %}">
             {% csrf_token %}
             <button type="submit">Done</button></form>
         </li>
