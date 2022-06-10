@@ -135,13 +135,14 @@
 </div>
 
 <div class="table-responsive">
-  <table class="table" data-sort="table">
-    <thead>
+  <table class="table table-inverse" data-sort="table">
+    <thead class="thead-inverse">
       <tr>
         <th><input type="checkbox" class="select-all" id="selectAll"></th>
         <th>Ticket #</th>
-        <th>Project</th>
         <th>Ticket Title</th>
+        <th>Ticket Decription</th>
+        <th>Project</th>
         <th>Status</th>
         <th>Difficulty</th>
       </tr>
@@ -152,8 +153,9 @@
         <td><input type="checkbox" class="select-row"></td>
         <td><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.id }}</a></td>
         <td>{{ ticket.title }}</td>
+        <td>{{ ticket.commentary }}</td>
         <td>{{ ticket.project}}</td>
-        <td>{{ ticket.status }}</td>
+        <td>{{ ticket.get_status_display }}</td>
         <td>{{ ticket.difficulty }}</td>
       </tr>
       {% endfor %}
