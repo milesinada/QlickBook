@@ -3,10 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from .models import Project, Ticket
-from django.shortcuts import render
-# from .forms import TicketStatusForm
+from django.shortcuts import render, redirect
 
 # Create your views here.
+
+
 def DashboardPageView(request):
   
     data_set = []
@@ -43,10 +44,32 @@ def DashboardPageView(request):
     return render(request, 'dashboard.html', {'data_set': data_set})
       
 
+def ProjectListView(request):  
+    data_set = [] 
+    project_list = Project.objects.all()    
+    for project in project_list:
+        instance = {
+            'count' : [0,0,0],
+            'title' : project.title,
+            'description' : project.description,
+            'id' : project.id
+            }
+        ticket_list = project.ticket_set.all()
+        for ticket in ticket_list:
+            if ticket.status == 0:
+                instance['count'][0] += 1
+            elif ticket.status == 1:
+                instance['count'][1] += 1
+            elif ticket.status == 2:
+                instance['count'][2] += 1
+        data_set.append(instance)  
+    return render(request, 'projects/list.html', {'data_set': data_set})
 
-class ProjectListView(LoginRequiredMixin, ListView):
-    template_name = 'projects/list.html'
-    model = Project
+
+
+# class ProjectListView(LoginRequiredMixin, ListView):
+#     template_name = 'projects/list.html'
+#     model = Project
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
@@ -65,6 +88,17 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     fields = ['title', 'description']
 
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "projects/edit.html"
+    model = Project
+    fields = '__all__'
+
+    
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "projects/delete.html"
+    model = Project
+    success_url = "/projects"
+
 class TicketListView(LoginRequiredMixin, ListView):
     template_name = 'tickets/ticket-list.html'
     model = Ticket
@@ -73,24 +107,34 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     template_name = "tickets/new.html"
     model = Ticket
     fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
+    success_url = "/projects/{project_id}"
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
     model = Ticket
+    
+def done(request,pk):
+    ticket = Ticket.objects.get(pk=pk)
+    ticket.status = '2'
+    ticket.save(update_fields=['status'])
+    return request
+
     # form = TicketStatusForm()
     # Link a js file to the HTML and send a patch Request to the ticketupdateview
 
 # def done(request, pk):
 #     ticket = Ticket.objects.get(pk=pk)
-#     project_id = Ticket.Project.id
-#     return redirect ('project_detail', project_id)
+#     project_id = ticket.project.id
+#     return  redirect('project_detail', project_id)
 
 class TicketUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "tickets/edit.html"
     model = Ticket
-    fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
+    fields = '__all__'
+    success_url = "/projects/{project_id}"
+
 
 class TicketDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "tickets/delete.html"
     model = Ticket
-    success_url = reverse_lazy('project_list')
+    success_url = "/projects/{project_id}"

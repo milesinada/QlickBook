@@ -54,6 +54,8 @@
     </div>
   
   {% endif %}
+  {% empty %}
+  <p>There are no projects yet. <a href="{% url 'project_new' %}">Make one here.</a></p>
   {% endfor %}  
 </div>
 

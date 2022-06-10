@@ -1,0 +1,12 @@
+{% extends 'icon-nav.html' %}
+
+{% block title %}Edit Project{% endblock title %}
+
+{% block content %}
+    <h1>Edit Project</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-success" value="Update" >
+    </form>
+{% endblock content %}

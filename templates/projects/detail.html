@@ -3,16 +3,32 @@
 {% block title %}{{project.title}}{% endblock title %}
 
 {% block content %}
+<div>
     <h1>{{project.title}}</h1>
-    <h2>{{project.description}}</h2>
-    <p>There are {} tickets that need to be completed</p>
-    <ol>
-        {% for ticket in ticket_list %}
-        <a href="{% url 'ticket_new' %}">Add a Ticket</a>
-        <li>{{ ticket.title }} <a href="{% url 'ticket_delete' ticket.id %}">delete</a>|<a href="{% url 'ticket_detail' ticket.id %}">View Ticket</a></li>
-        {{ ticket.project }}    
+    <h4>{{project.description}}</h4>
+    <a href="{% url 'project_edit' project.id %}">Edit Project Details</a>
+    <p>There are {{ticket_list|length}} tickets in this project.</p>
+    <a class="btn btn-primary" href="{% url 'ticket_new' %}">Add a Ticket</a>
+</div>
+<br>
+<div class="row">
+    {% for ticket in ticket_list %}
+        <div class="col-sm-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title text-dark">{{ ticket.title }}</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">Created by: {{ ticket.author }}</h6>
+                    <p class="card-text text-dark">{{ticket.commentary}}</p>
+                    <p class="card-text text-light bg-dark">{{ticket.get_status_display}}</p>
+                    <a href="{% url 'ticket_delete' ticket.id %}" class="text-danger card-link">Delete</a>
+                    <a href="{% url 'ticket_detail' ticket.id %}" class="card-link">View Ticket</a>
+                </div>
+            </div>
+            <br>
+        </div>
     {% empty %}
-    <p>There are no tickets in this project yet. <a href="{% url 'ticket_new' %}">create one here</a></p>
+    <p>There are no tickets in this project yet.</p>
     {% endfor %}
-    </ol>
+</div>
+<a class="btn btn-danger" href="{% url 'project_delete' project.id %}">Delete Project</a>
 {% endblock content %}
