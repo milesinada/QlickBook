@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # Create your views here.
 class SignUpPageView(CreateView):
     model = User
+    #tesing merge
     # form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
