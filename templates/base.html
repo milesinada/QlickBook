@@ -39,9 +39,7 @@
           <a class="sidebar-brand img-responsive" href="{% url 'home' %}">
             <span class="icon icon-leaf sidebar-brand-icon"></span>
           </a>
-          <a class="btn btn-sm btn-primary" href="{% url 'dashboard' %}">Your Dashboard</a>
-          <a class="btn btn-sm btn-primary" href="{% url 'about' %}">About</a>
-          <a class="btn btn-sm btn-primary" href="/admin">Login</a>
+          <a class="btn btn-sm btn-primary" href="/admin">Portal</a>
         </div>
 
         <div class="collapse nav-toggleable-md" id="nav-toggleable-md">
@@ -60,10 +58,10 @@
               <a class="nav-link " href="{% url 'ticket-history' %}">Order history</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link "href="fluid/index.html">Fluid layout</a>
+              <a class="nav-link "href="{% url 'about' %}">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="{% url 'project_list' %}">Icon nav</a>
+              <a class="nav-link " href="{% url 'faq' %}">FAQ</a>
             </li>
 
             <li class="nav-header">More</li>
