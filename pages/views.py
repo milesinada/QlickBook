@@ -15,3 +15,6 @@ class TicketHistoryPageView(LoginRequiredMixin, ListView):
 
 class FaqPageView(TemplateView):
     template_name = 'faq.html'
+
+class ContactPageView(TemplateView):
+    template_name = 'contact.html'
