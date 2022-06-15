@@ -9,8 +9,8 @@
 <!-- Ticket should sAY VIEW TICKET instead of EDIT
 -Edit should be in the TicketDetailView -->
 
-Ticket Status update
--Ticket shoudl be editable from project detail and Ticket detail
+<!-- Ticket Status update
+-Ticket shoudl be editable from project detail and Ticket detail -->
 
 User model
 -Should have a way to seperate Owner/Manager/Staff
@@ -20,12 +20,26 @@ User model
 -Staff/Employee can only mark Tickets as completed
 -User needs to only access their corresponding data (made projects)
 
+Project Detail
+-Estimated amount of sprints to ->
+
 Sprint Model
 -Project detail will see sprint model
 -Start/End date
 -ListofTickets (backlog)
 -Devs assigned
 
-Login access
+<!-- Login access
 -Need to Figure out what pages will require a login
--Need to limit access between user status
+-Need to limit access between user status -->
+
+Guest list
+-Limited to use software as a trial
+-Name the company they are from
+
+Dash graphs
+-Guest list
+-Ticket Count /Slay
+-Sprint Log
+-Page Views
+-Employee -ticket kills
