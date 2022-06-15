@@ -5,11 +5,13 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy, reverse
 from .models import Project, Ticket
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
 
-
+@login_required
 def DashboardPageView(request):
   
     data_set = []
@@ -45,7 +47,7 @@ def DashboardPageView(request):
   
     return render(request, 'dashboard.html', {'data_set': data_set})
       
-
+@login_required
 def ProjectListView(request):  
     data_set = [] 
     project_list = Project.objects.all()    
@@ -67,6 +69,7 @@ def ProjectListView(request):
         data_set.append(instance)  
     return render(request, 'projects/list.html', {'data_set': data_set})
 
+@login_required
 def done(request,pk):
     ticket = Ticket.objects.get(pk=pk)
     ticket.status = '2'
