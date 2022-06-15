@@ -41,54 +41,36 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="traffic">
         <div class="row text-center m-t-md">
-
-          {% for project in project_list %}
-          <div class="col-md-4 mb-5">
-            <div class="w-3 mx-auto">
-              <canvas
-                class="ex-graph"
-                width="200" height="200"
-                data-chart="doughnut"
-                data-dataset="[230, 130]"
-                data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }"
-                data-labels="['Returning', 'New']"
-                >
-              </canvas>
-            </div>
-            <strong class="text-muted"><a href="{% url 'project_detail' project.id %}">{{ project.title }}</strong>
-            <h4>{{project.description}}</h4>
-          </div>
+          {% for ticket in ticket_list %}
+          <p>{{ticket.title}}</p>
           {% endfor %}
-          
-          <div class="col-md-4 mb-4">
-            <div class="w-3 mx-auto">
-              <canvas
-                class="ex-graph"
-                width="200" height="200"
-                data-chart="doughnut"
-                data-dataset="[330,30]"
-                data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }"
-                data-labels="['Returning', 'New']">
-              </canvas>
-            </div>
-            <strong class="text-muted">Revenue</strong>
-            <h4>New vs Recurring</h4>
-          </div>
 
-          <div class="col-md-4 mb-5">
-            <div class="w-3 mx-auto">
-              <canvas
-                class="ex-graph"
-                width="200" height="200"
-                data-chart="doughnut"
-                data-dataset="[100,260]"
-                data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }"
-                data-labels="['Referrals', 'Direct']">
-              </canvas>
-            </div>
-            <strong class="text-muted">Traffic</strong>
-            <h4>Direct vs Referrals</h4>
-          </div>
+          <div class="row text-center mt-5">
+            {% for tickets in ticket_list %}
+            <p>{{ ticket.title }} </p>
+            {% endfor %}
+            <p>{{ ticket.count }}</p>
+            
+            {% for project in data_set %}
+              <div class="col-md-4 mb-4 mb-md-3">
+                <div class="w-3 mx-auto">
+                  <canvas
+                  class="ex-graph"
+                  width="200" height="200"
+                  data-chart="doughnut"
+                  data-dataset="[ {% for count in project.count %}
+                    {{count}},
+                    {% endfor %}]"
+                  data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e', 'black'] }"
+                  data-labels="['Completed','In-Progress','Not-Started']">
+                </canvas>
+                <strong class="text-muted">{{ project.description }}</strong>
+                <a href="{% url 'project_detail' project.id %}"><h4>{{ project.title }}</h4></a>
+                </div>
+              </div>
+            {% empty %}
+            <p>There are no projects yet. <a href="{% url 'project_new' %}">Make one here.</a></p>
+            {% endfor %}  
         </div>
       </div>
 

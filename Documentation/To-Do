@@ -1,0 +1,30 @@
+<!-- Ticket completed date
+-Currently have to put somethign in the field to create a Ticket
+-Should just have this field when ticket is completed -->
+
+<!-- project status (doughnut)
+-Oriject doughnut in dash should have a score of where the progress is
+-Put status into [] for the doughnut -->
+
+<!-- Ticket should sAY VIEW TICKET instead of EDIT
+-Edit should be in the TicketDetailView -->
+
+Ticket Status update
+-Ticket shoudl be editable from project detail and Ticket detail
+
+User model
+-Should have a way to seperate Owner/Manager/Staff
+-Should have access blocks on what Staff can see vs manager vs owner
+-Owner Full Access As we see site now
+-Manager Cannot Create Projects only Tickets
+-Staff/Employee can only mark Tickets as completed
+
+Sprint Model
+-Project detail will see sprint model
+-Start/End date
+-ListofTickets (backlog)
+-Devs assigned
+
+Login access
+-Need to Figure out what pages will require a login
+-Need to limit access between user status

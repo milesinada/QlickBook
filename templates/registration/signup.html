@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block title %} Sign Up{% endblock title %}
 
 {% block content %}
-    <div class="col-md-9 content">
-        <div class="dashhead">
-        <div class="dashhead-titles">
-        <div class="btn-toolbar dashhead-toolbar">
-        <div class="btn-toolbar-item input-with-icon">
-        </div>
-    </div>
+<div class="col-md-9 content">
     <h1>Sign Up</h1>
-
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register" class="btn btn-success">
+    </form>
+</div>
 {% endblock content %}
