@@ -45,7 +45,7 @@
         data-dataset="[ {% for count in project.count %}
           {{count}},
           {% endfor %}]"
-        data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e', 'black'] }"
+        data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }"
         data-labels="['Completed','In-Progress','Not-Started']">
       </canvas>
       <a href="{% url 'project_detail' project.id %}"><h4>{{ project.title }}</h4></a>
@@ -141,7 +141,7 @@
   <div class="col-md-6 mb-5">
     <div class="list-group mb-3">
       <h6 class="list-group-header">
-        Countries
+        Largest Project by KLOC
       </h6>
       
         <a class="list-group-item list-group-item-action justify-content-between" href="#">
