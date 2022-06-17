@@ -4,3 +4,4 @@ from .models import Project, Ticket
 # Register your models here.
 admin.site.register(Project)
 admin.site.register(Ticket)
+admin.site.register(Sprint)
