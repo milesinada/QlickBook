@@ -88,18 +88,37 @@ def done(request,pk):
 #     template_name = 'projects/list.html'
 #     model = Project
 
+def ProjectDetailView(request, pk):
 
-class ProjectDetailView(LoginRequiredMixin, DetailView):
-    model = Project
-    template_name = 'projects/detail.html'
-    def get_queryset(self):
-        return Project.objects.filter(id=self.kwargs['pk'])
+    project = Project.objects.get(pk=pk)
+    ticket_list = project.ticket_set.all()
+    instance = {
+            'count' : [0,0,0],
+            'title' : project.title,
+            'description' : project.description,
+            'id' : project.id,
+            'ticket_list' : ticket_list
+            }
+    for ticket in ticket_list:
+        if ticket.status == 2:
+            instance['count'][0] += 1
+        elif ticket.status == 1:
+            instance['count'][1] += 1
+        elif ticket.status == 0:
+            instance['count'][2] += 1
+    return render(request, 'projects/detail.html', instance)
+
+# class ProjectDetailView(LoginRequiredMixin, DetailView):
+#     model = Project
+#     template_name = 'projects/detail.html'
+#     def get_queryset(self):
+#         return Project.objects.filter(id=self.kwargs['pk'])
     
-    def get_context_data(self, **kwargs):
-        context = super(ProjectDetailView, self).get_context_data(**kwargs)
-        context["ticket_list"] = Ticket.objects.filter(project_id=self.kwargs['pk'])
-        return context
-        # select_related used if only need 1 query to server. would be better to use in ticket_detail rather Project detail. In Ticket_detail to show Project.title use S_R()
+#     def get_context_data(self, **kwargs):
+#         context = super(ProjectDetailView, self).get_context_data(**kwargs)
+#         context["ticket_list"] = Ticket.objects.filter(project_id=self.kwargs['pk'])
+#         return context
+#         # select_related used if only need 1 query to server. would be better to use in ticket_detail rather Project detail. In Ticket_detail to show Project.title use S_R()
 
 
     

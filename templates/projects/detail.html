@@ -1,24 +1,16 @@
 {% extends 'icon-nav.html' %}
 
-{% block title %}{{project.title}}{% endblock title %}
+{% block title %}{{title}}{% endblock title %}
 
 {% block content %}
 
 <div>
-    <h1 class="text-info">{{project.title}}</h1>
-    <h4>{{project.description}}</h4>
-    <a href="{% url 'project_edit' project.id %}">Edit Project Details</a>
-    
-</div>
-<br>
-
-
-
 
     <div class="dashhead">
       <div class="dashhead-titles">
-        <h1 class="dashhead-subtitle">{{project.title}}</h1>
-        <h3 class="dashhead-title">{{ticket_list|length}} Tickets</h3>
+        <h1 class="text-info"><a href="{% url 'project_edit' id %}">{{title}}</a></h1>
+        <h4 class="dashhead-title">{{description}}</h4>
+        <h3 class="dashhead-subtitle">{{ticket_list|length}} Open tickets</h3>
       </div>
 
       <div class="dashhead-toolbar">
@@ -34,13 +26,30 @@
         </div>
       </div>
     </div>
+    
+    <div class="d-flex justify-content-center">
+        <div class="col-md-8 mb-4 mb-md-3">
+            <div class="w-3 mx-auto">
+                <canvas
+                class="ex-graph "
+                width="200" height="200"
+                data-chart="doughnut"
+                data-dataset="{{count}}"
+                data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e', ] }"
+                data-labels="['Completed','In-Progress','Not-Started']">
+                </canvas>
+                <strong class="text-muted">{{ project.description }}</strong>
+                <a href="{% url 'project_detail' id %}"><h4>{{ project.title }}</h4></a>
+            </div>
+        </div>
+    </div>
 
     <ul class="nav nav-bordered mt-4 mt-md-2 mb-0 clearfix" role="tablist">
       <li class="nav-item" role="presentation">
-        <a href="#traffic" class="nav-link active" role="tab" data-toggle="tab" aria-controls="traffic">Traffic</a>
+        <a href="#traffic" class="nav-link active" role="tab" data-toggle="tab" aria-controls="traffic">Open Tickets</a>
       </li>
       <li class="nav-item" role="presentation">
-        <a href="#sales" class="nav-link" role="tab" data-toggle="tab" aria-controls="sales">Sales</a>
+        <a href="#sales" class="nav-link" role="tab" data-toggle="tab" aria-controls="sales">Burndown Chart</a>
       </li>
       <li class="nav-item" role="presentation">
         <a href="#support" class="nav-link" role="tab" data-toggle="tab" aria-controls="support">Support</a>
@@ -81,32 +90,10 @@
       </div>
 
           <div class="row text-center mt-5">
-            {% for tickets in ticket_list %}
-            <p>{{ ticket.title }} </p>
-            {% endfor %}
-            <p>{{ ticket.count }}</p>
-            
-            {% for tickets in ticket_list %}
-              <div class="col-md-4 mb-4 mb-md-3">
-                <div class="w-3 mx-auto">
-                  <canvas
-                  class="ex-graph"
-                  width="200" height="200"
-                  data-chart="doughnut"
-                  data-dataset="[ {% for count in project.count %}
-                    {{count}},
-                    {% endfor %}]"
-                  data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e', 'black'] }"
-                  data-labels="['Completed','In-Progress','Not-Started']">
-                </canvas>
-                <strong class="text-muted">{{ project.description }}</strong>
-                <a href="{% url 'project_detail' project.id %}"><h4>{{ project.title }}</h4></a>
-                </div>
-              </div>
-            {% empty %}
-            <p>There are no tickets in this project yet.<a href="{% url 'project_new' %}">Make one here.</a></p>
-            
-            {% endfor %}  
+        
+            <hr><br>
+              
+
         </div>
       </div>
 
@@ -366,7 +353,8 @@
       
 
 
-      <a class="btn btn-danger" href="{% url 'project_delete' project.id %}">Delete {{project.title}}</a>
+      <a class="btn btn-danger" href="{% url 'project_delete' id %}">Delete {{project.title}}</a>
     </div>
+</div>
 
     {% endblock content %}
