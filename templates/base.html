@@ -26,7 +26,7 @@
         *width: 100%;
       }
     </style>
-    <title>{% block title %}My App{% endblock title %}</title>
+    <title>{% block title %}QlickBook{% endblock title %}</title>
 </head>
 <body>
   <div class="container"><div class="row">
@@ -51,7 +51,7 @@
             </button>
           </form>
           <ul class="nav nav-pills nav-stacked flex-column">
-            <li class="nav-header">Dashboards</li>
+            <li class="nav-header">Public</li>
             <li class="nav-item">
               <a class="nav-link active" href="{% url 'home' %}">Overview</a>
             </li>
@@ -63,7 +63,7 @@
             </li>
             {% if user.is_authenticated %}
             
-            <li class="nav-header">More</li>
+            <li class="nav-header">Private</li>
             <li class="nav-item">
               <a class="nav-link " href="{% url 'dashboard' %}">Dashboard</a>
             </li>
