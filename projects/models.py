@@ -1,7 +1,9 @@
 from multiprocessing import AuthenticationError
 from time import timezone
-from django.db import models
+from turtle import title
+from django.db import models 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User, Group
 from django.urls import reverse
 from django.utils import timezone
 
@@ -49,3 +51,19 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('project_list')
+
+class Sprint(models.Model):
+    LENGTH_CHOICES = (('1_week', '1 Week'), ('2_weeks', '2 Weeks'), ('3_weeks', '3 Weeks'))
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="sprints", null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="sprints", null=True)
+    start_date = models.DateField(auto_now = False, auto_now_add=False)
+    end_date = models.DateField(auto_now = False, auto_now_add=False)
+    duration = models.CharField(max_length = 10, choices = LENGTH_CHOICES)
+    complete = models.BooleanField(null=True, default=False)
+    retrospective = models.CharField(max_length=10000, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+    
+admin.site.register(Sprint)
