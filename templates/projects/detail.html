@@ -3,32 +3,370 @@
 {% block title %}{{project.title}}{% endblock title %}
 
 {% block content %}
+
 <div>
-    <h1>{{project.title}}</h1>
+    <h1 class="text-info">{{project.title}}</h1>
     <h4>{{project.description}}</h4>
     <a href="{% url 'project_edit' project.id %}">Edit Project Details</a>
-    <p>There are {{ticket_list|length}} tickets in this project.</p>
-    <a class="btn btn-primary" href="{% url 'ticket_new' %}">Create a Ticket</a>
+    
 </div>
 <br>
-<div class="row">
-    {% for ticket in ticket_list %}
-        <div class="col-sm-6">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title text-dark">{{ ticket.title }}</h3>
-                    <h6 class="card-subtitle mb-2 text-muted">Created by: {{ ticket.author }}</h6>
-                    <p class="card-text text-dark">{{ticket.commentary}}</p>
-                    <p class="card-text text-light bg-dark">{{ticket.get_status_display}}</p>
-                    <a href="{% url 'ticket_delete' ticket.id %}" class="text-danger card-link">Delete</a>
-                    <a href="{% url 'ticket_detail' ticket.id %}" class="card-link">View Ticket</a>
-                </div>
-            </div>
-            <br>
+
+
+
+
+    <div class="dashhead">
+      <div class="dashhead-titles">
+        <h1 class="dashhead-subtitle">{{project.title}}</h1>
+        <h3 class="dashhead-title">{{ticket_list|length}} Tickets</h3>
+      </div>
+
+      <div class="dashhead-toolbar">
+        <div class="input-with-icon dashhead-toolbar-item">
+          <input type="text" value="01/01/15 - 01/08/15" class="form-control" data-provide="datepicker">
+          <span class="icon icon-calendar"></span>
         </div>
-    {% empty %}
-    <p>There are no tickets in this project yet.</p>
-    {% endfor %}
-</div>
-<a class="btn btn-danger" href="{% url 'project_delete' project.id %}">Delete Project</a>
-{% endblock content %}
+        <span class="dashhead-toolbar-divider hidden-sm-down"></span>
+        <div class="btn-group dashhead-toolbar-item btn-group-thirds">
+          <button type="button" class="btn btn-outline-primary">Day</button>
+          <button type="button" class="btn btn-outline-primary active">Week</button>
+          <button type="button" class="btn btn-outline-primary">Month</button>
+        </div>
+      </div>
+    </div>
+
+    <ul class="nav nav-bordered mt-4 mt-md-2 mb-0 clearfix" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a href="#traffic" class="nav-link active" role="tab" data-toggle="tab" aria-controls="traffic">Traffic</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a href="#sales" class="nav-link" role="tab" data-toggle="tab" aria-controls="sales">Sales</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a href="#support" class="nav-link" role="tab" data-toggle="tab" aria-controls="support">Support</a>
+      </li>
+    </ul>
+
+    <hr class="mt-0 mb-5">
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="traffic">
+       <div class="table-responsive">
+        <table class="table table-inverse" data-sort="table">
+          <thead class="thead-inverse">
+            <tr>
+              <th><input type="checkbox" class="select-all" id="selectAll"></th>
+              <th>Ticket #</th>
+              <th>Subject</th>
+              <th>Decription</th>
+              <th>Status</th>
+              <th>Difficulty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ticket in ticket_list %}
+            <tr>
+              <td><input type="checkbox" class="select-row"></td>
+              <td>{{ ticket.id }}</a></td>
+              <td><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.title }}</td>
+              <td>{{ ticket.commentary }}</td>
+              <td>{{ ticket.get_status_display }}</td>
+              <td>{{ ticket.get_difficulty_display }}</td>
+            </tr>
+            {% endfor %}
+      
+          </tbody>
+        </table>
+        <a class="btn btn-primary" href="{% url 'ticket_new' %}">NewTicket</a>
+      </div>
+
+          <div class="row text-center mt-5">
+            {% for tickets in ticket_list %}
+            <p>{{ ticket.title }} </p>
+            {% endfor %}
+            <p>{{ ticket.count }}</p>
+            
+            {% for tickets in ticket_list %}
+              <div class="col-md-4 mb-4 mb-md-3">
+                <div class="w-3 mx-auto">
+                  <canvas
+                  class="ex-graph"
+                  width="200" height="200"
+                  data-chart="doughnut"
+                  data-dataset="[ {% for count in project.count %}
+                    {{count}},
+                    {% endfor %}]"
+                  data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e', 'black'] }"
+                  data-labels="['Completed','In-Progress','Not-Started']">
+                </canvas>
+                <strong class="text-muted">{{ project.description }}</strong>
+                <a href="{% url 'project_detail' project.id %}"><h4>{{ project.title }}</h4></a>
+                </div>
+              </div>
+            {% empty %}
+            <p>There are no tickets in this project yet.<a href="{% url 'project_new' %}">Make one here.</a></p>
+            
+            {% endfor %}  
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="sales">
+        <div class="ex-line-graphs mb-5">
+          <canvas
+            class="ex-line-graph"
+            width="600" height="400"
+            data-chart="line"
+            data-dataset="[[2500, 3300, 2512, 2775, 2498, 3512, 2925, 4275, 3507, 3825, 3445, 3985]]"
+            data-labels="['','Aug 29','','','Sept 5','','','Sept 12','','','Sept 19','']"
+            data-dark="true">
+          </canvas>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="support">
+        <div class="ex-line-graphs mb-5">
+          <canvas
+            class="ex-line-graph"
+            width="600" height="400"
+            data-chart="bar"
+            data-dark="true"
+            data-labels="['August','September','October','November','December','January','February']"
+            data-dataset="[[65, 59, 80, 81, 56, 55, 40], [28, 48, 40, 19, 86, 27, 90]]"
+            data-dataset-options="[{label: 'First dataset'}, {label: 'Second dataset'}]">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="hr-divider my-4">
+      <h3 class="hr-divider-content hr-divider-heading">Quick stats</h3>
+    </div>
+
+    <div class="row statcards mt-3 mb-3 text-xs-center text-md-left">
+      <div class="col-6 col-md-3 statcard mb-4">
+        <h3 class="statcard-number text-success">
+          12,938
+          <small class="delta-indicator delta-positive">5%</small>
+        </h3>
+        <span class="statcard-desc">Page views</span>
+      </div>
+      <div class="col-6 col-md-3 statcard mb-4">
+        <h3 class="statcard-number text-danger">
+          758
+          <small class="delta-indicator delta-negative">1.3%</small>
+        </h3>
+        <span class="statcard-desc">Downloads</span>
+      </div>
+      <div class="col-6 col-md-3 statcard mb-4">
+        <h3 class="statcard-number text-success">
+          1,293
+          <small class="delta-indicator delta-positive">6.75%</small>
+        </h3>
+        <span class="statcard-desc">Sign-ups</span>
+      </div>
+      <div class="col-6 col-md-3 statcard mb-4">
+        <h3 class="statcard-number text-danger">
+          758
+          <small class="delta-indicator delta-negative">1.3%</small>
+        </h3>
+        <span class="statcard-desc">Downloads</span>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+      <div class="col-lg-4 mb-5">
+        <div class="list-group mb-3">
+          <h6 class="list-group-header">
+            Completion Status
+          </h6>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 62.4%;"></span>
+              <span>United States</span>
+              <span class="text-muted">62.4%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 15.0%;"></span>
+              <span>India</span>
+              <span class="text-muted">15.0%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 5.0%;"></span>
+              <span>United Kingdom</span>
+              <span class="text-muted">5.0%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 5.0%;"></span>
+              <span>Canada</span>
+              <span class="text-muted">5.0%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 4.5%;"></span>
+              <span>Russia</span>
+              <span class="text-muted">4.5%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 2.3%;"></span>
+              <span>Mexico</span>
+              <span class="text-muted">2.3%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 1.7%;"></span>
+              <span>Spain</span>
+              <span class="text-muted">1.7%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 1.5%;"></span>
+              <span>France</span>
+              <span class="text-muted">1.5%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 1.4%;"></span>
+              <span>South Africa</span>
+              <span class="text-muted">1.4%</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span class="list-group-progress" style="width: 1.2%;"></span>
+              <span>Japan</span>
+              <span class="text-muted">1.2%</span>
+            </a>
+          
+        </div>
+        <a href="#" class="btn btn-outline-primary px-3">All countries</a>
+      </div>
+      <div class="col-lg-4 mb-5">
+        <div class="list-group mb-3">
+          <h6 class="list-group-header">
+            Most visited pages
+          </h6>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/ (Logged out)</span>
+              <span class="text-muted">3,929,481</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/ (Logged in)</span>
+              <span class="text-muted">1,143,393</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/tour</span>
+              <span class="text-muted">938,287</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/features/something</span>
+              <span class="text-muted">749,393</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/features/another-thing</span>
+              <span class="text-muted">695,912</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/users/username</span>
+              <span class="text-muted">501,938</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/page-title</span>
+              <span class="text-muted">392,842</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/some/page-slug</span>
+              <span class="text-muted">298,183</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/another/directory/and/page-title</span>
+              <span class="text-muted">193,129</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>/one-more/page/directory/file-name</span>
+              <span class="text-muted">93,382</span>
+            </a>
+          
+        </div>
+        <a href="#" class="btn btn-outline-primary px-3">View all pages</a>
+      </div>
+      <div class="col-lg-4 mb-5">
+        <div class="list-group mb-3">
+          <h6 class="list-group-header">
+            Devices and resolutions
+          </h6>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Desktop (1920x1080)</span>
+              <span class="text-muted">3,929,481</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Desktop (1366x768)</span>
+              <span class="text-muted">1,143,393</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Desktop (1440x900)</span>
+              <span class="text-muted">938,287</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Desktop (1280x800)</span>
+              <span class="text-muted">749,393</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Tablet (1024x768)</span>
+              <span class="text-muted">695,912</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Tablet (768x1024)</span>
+              <span class="text-muted">501,938</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Phone (320x480)</span>
+              <span class="text-muted">392,842</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Phone (720x450)</span>
+              <span class="text-muted">298,183</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Desktop (2560x1080)</span>
+              <span class="text-muted">193,129</span>
+            </a>
+          
+            <a class="list-group-item list-group-item-action justify-content-between" href="#">
+              <span>Desktop (2560x1600)</span>
+              <span class="text-muted">93,382</span>
+            </a>
+          
+        </div>
+        <a href="#" class="btn btn-outline-primary px-3">View all pages</a>
+      </div>
+      
+
+
+      <a class="btn btn-danger" href="{% url 'project_delete' project.id %}">Delete {{project.title}}</a>
+    </div>
+
+    {% endblock content %}

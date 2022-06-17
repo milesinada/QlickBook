@@ -88,6 +88,7 @@ def done(request,pk):
 #     template_name = 'projects/list.html'
 #     model = Project
 
+
 class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     template_name = 'projects/detail.html'
@@ -99,6 +100,9 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context["ticket_list"] = Ticket.objects.filter(project_id=self.kwargs['pk'])
         return context
         # select_related used if only need 1 query to server. would be better to use in ticket_detail rather Project detail. In Ticket_detail to show Project.title use S_R()
+
+
+    
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = "projects/new.html"
