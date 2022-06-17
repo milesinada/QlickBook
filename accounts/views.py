@@ -29,3 +29,4 @@ class PasswordChangeDonePageView(TemplateView):
 
 class PasswordResetPageView(TemplateView):
     template_name = 'registration/password_reset.html'
+
