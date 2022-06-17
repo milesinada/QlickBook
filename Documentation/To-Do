@@ -29,6 +29,13 @@ Sprint Model
 -ListofTickets (backlog)
 -Devs assigned
 
+SCRUM standout (optional )
+Burn down chart
+
+Traffic = Open Tickets
+Sales = sprint (burndown chart)
+Support = Complete tickets vs uncompleted graph to the time periods
+
 <!-- Login access
 -Need to Figure out what pages will require a login
 -Need to limit access between user status -->

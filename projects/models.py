@@ -2,7 +2,6 @@ from multiprocessing import AuthenticationError
 from time import timezone
 from django.db import models 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User, Group
 from django.urls import reverse
 from django.utils import timezone
 
@@ -64,3 +63,4 @@ class Sprint(models.Model):
 
     def __str__(self):
         return self.title
+    
