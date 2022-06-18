@@ -1,52 +1,43 @@
 from multiprocessing import context
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy, reverse
-from .models import Project, Ticket
+from .models import Project, Ticket, Sprint
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-
-
-# Create your views here.
-
 @login_required
-def DashboardPageView(request):
-  
+def DashboardPageView(request):  
     data_set = []
-            # Get all the projects 
-    
-    project_list = Project.objects.all()
-    
+    # Get all the projects     
+    project_list = Project.objects.all()    
     for project in project_list:
         instance = {
             'count' : [0,0,0],
             'title' : project.title,
             'description' : project.description,
             'id' : project.id
-            }            
-        
+            }
         ticket_list = project.ticket_set.all()
-# loop through each project and get all tickets associated with (this) projects
+        # loop through each project and get all tickets associated with (this) projects
         for ticket in ticket_list:
+        # loop through all tickets and count each status
+        # if statements for each status incrementing count
             if ticket.status == 2:
+            # after looping through all tickets we create an array of counts for the status
                 instance['count'][0] += 1
             elif ticket.status == 1:
                 instance['count'][1] += 1
             elif ticket.status == 0:
                 instance['count'][2] += 1
-# loop through all tickets and count each status
-
-# if statements for each status incrementing count
-
-# after looping through all tickets we create an array of counts for the status
-
-# append this count array to a temp dictionary
-        data_set.append(instance)
-  
+        # append this count array to a temp dictionary
+        data_set.append(instance)  
     return render(request, 'dashboard.html', {'data_set': data_set})
-      
+
+#------------------- Project Views -----------------------------
+
 @login_required
 def ProjectListView(request):  
     data_set = [] 
@@ -69,35 +60,21 @@ def ProjectListView(request):
         data_set.append(instance)  
     return render(request, 'projects/list.html', {'data_set': data_set})
 
-@login_required
-def done(request,pk):
-    ticket = Ticket.objects.get(pk=pk)
-    ticket.status = '2'
-    ticket.save(update_fields=['status'])
-
-    project= ticket.project.id
-    return redirect(reverse('project_detail', kwargs={'pk':project}))
-
-    #return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))  This works without refresh in ticket detail!!
-
-
-
-    # success_url = reverse_lazy('/projects/{project.id}')
-# return redirect(reverse('company:search_auditors', kwargs={"pk": company_details.pk}))
 # class ProjectListView(LoginRequiredMixin, ListView):
 #     template_name = 'projects/list.html'
 #     model = Project
 
 def ProjectDetailView(request, pk):
-
     project = Project.objects.get(pk=pk)
     ticket_list = project.ticket_set.all()
+    sprint_list = project.sprint_set.all()
     instance = {
             'count' : [0,0,0],
             'title' : project.title,
             'description' : project.description,
             'id' : project.id,
-            'ticket_list' : ticket_list
+            'ticket_list' : ticket_list,
+            'sprint_list' : sprint_list
             }
     for ticket in ticket_list:
         if ticket.status == 2:
@@ -113,15 +90,12 @@ def ProjectDetailView(request, pk):
 #     template_name = 'projects/detail.html'
 #     def get_queryset(self):
 #         return Project.objects.filter(id=self.kwargs['pk'])
-    
+#     
 #     def get_context_data(self, **kwargs):
 #         context = super(ProjectDetailView, self).get_context_data(**kwargs)
 #         context["ticket_list"] = Ticket.objects.filter(project_id=self.kwargs['pk'])
 #         return context
 #         # select_related used if only need 1 query to server. would be better to use in ticket_detail rather Project detail. In Ticket_detail to show Project.title use S_R()
-
-
-    
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = "projects/new.html"
@@ -139,6 +113,18 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     model = Project
     success_url = "/projects/list"
 
+
+#------------------- Ticket Views -----------------------------
+
+@login_required
+def done(request,pk):
+    ticket = Ticket.objects.get(pk=pk)
+    ticket.status = '2'
+    ticket.save(update_fields=['status'])
+    project= ticket.project.id
+    return redirect(reverse('project_detail', kwargs={'pk':project}))
+    #return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))  This works without refresh in ticket detail!!
+
 class TicketListView(LoginRequiredMixin, ListView):
     template_name = 'tickets/ticket-list.html'
     model = Ticket
@@ -151,27 +137,12 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
-    model = Ticket
-    
-
-
-    # project_id = Project.id
-    # related_project = Ticket.project
-    # # Project.objects.filter(id=self.kwargs['pk'])
-
-    # project = Project.objects.filter(id=related_project)
-    # # ticket_list = project.ticket_set.all()
-    # context = {
-    #     'project_id' : project,
-    # }
-
-    # form = TicketStatusForm()
-    # Link a js file to the HTML and send a patch Request to the ticketupdateview
-
-# def done(request, pk):
-#     ticket = Ticket.objects.get(pk=pk)
-#     project_id = ticket.project.id
-#     return  redirect('project_detail', project_id)
+    model = Ticket  
+    # Make a function to complete a Ticket. Function based done()
+    # def done(request, pk):
+    #     ticket = Ticket.objects.get(pk=pk)
+    #     project_id = ticket.project.id
+    #     return  redirect('project_detail', project_id)
 
 class TicketUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "tickets/edit.html"
@@ -183,4 +154,34 @@ class TicketUpdateView(LoginRequiredMixin, UpdateView):
 class TicketDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "tickets/delete.html"
     model = Ticket
+    success_url = "/projects/{project_id}"
+
+#------------------- Sprints Views -----------------------------
+
+class SprintListView(LoginRequiredMixin, ListView):
+    template_name = 'sprints/list.html'
+    model = Sprint
+
+class SprintCreateView(LoginRequiredMixin, CreateView):
+    template_name = "sprints/new.html"
+    model = Sprint
+    fields = '__all__'
+    success_url = "/projects/{project_id}"
+
+class SprintDetailView(LoginRequiredMixin, DetailView):
+    template_name = "sprints/detail.html"
+    model = Sprint  
+
+    # Need to have a list of Tickets and correlating Project
+
+class SprintUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "sprints/edit.html"
+    model = Sprint
+    fields = '__all__'
+    success_url = "/projects/{project_id}"
+
+
+class SprintDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "sprints/delete.html"
+    model = Sprint
     success_url = "/projects/{project_id}"

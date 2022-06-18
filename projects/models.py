@@ -54,7 +54,7 @@ class Sprint(models.Model):
     LENGTH_CHOICES = (('1_week', '1 Week'), ('2_weeks', '2 Weeks'), ('3_weeks', '3 Weeks'))
     title = models.CharField(max_length=200)
     created_by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="sprints", null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="sprints", null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     start_date = models.DateField(auto_now = False, auto_now_add=False)
     end_date = models.DateField(auto_now = False, auto_now_add=False)
     duration = models.CharField(max_length = 10, choices = LENGTH_CHOICES)
