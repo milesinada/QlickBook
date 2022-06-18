@@ -1,0 +1,15 @@
+{% extends 'icon-nav.html' %}
+
+{% block title %}Sprints{% endblock title %}
+
+{% block content %}
+    <h1>Sprints</h1>
+    {% for sprints in sprint_list %}
+        <h3>{{ sprint.title }}</h3>
+        <h4>{{ sprint.status }}</h4>
+        <p>{{ sprint.commentary }}</p>
+        <p>{{sprint.project}}</p>
+    {% empty %}
+    <p>Relax its over for now... or you can <a href="{% url 'sprint_new' %}">create a sprint</a></p>
+    {% endfor %}
+{% endblock content %}
