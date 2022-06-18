@@ -86,13 +86,24 @@
       
           </tbody>
         </table>
-        <a class="btn btn-primary" href="{% url 'ticket_new' %}">NewTicket</a>
+        <a class="btn btn-primary" href="{% url 'ticket_new' %}">New Ticket</a>
       </div>
 
           <div class="row text-center mt-5">
-        
+
             <hr><br>
+            <div class="d-flex justify-content-center">
+              <div class="col-md-8 mb-4 mb-md-3">
+              {% for sprint in sprint_list %}
+              <p>{{ sprint.title }}</p>
+              <p>{{ sprint.end_date }}</p>
+              <p>{{ sprint.get_duration_display }}</p>
+              <p>Tickets to complete in sprint</p>
+              {% endfor %}
+              <a href="{% url 'sprint_new' %}" class="btn btn-primary">New Sprint</a>
               
+              </div>
+            </div>
 
         </div>
       </div>

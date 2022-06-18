@@ -46,15 +46,20 @@
     <div class="iconav-slider">
       <ul class="nav nav-pills iconav-nav flex-md-column">
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard' %}" title="Dashboard" data-toggle="tooltip" data-placement="right" data-container="body">
+            <span class="icon icon-home"></span>
+            <small class="iconav-nav-label hidden-md-up">Dashboard</small>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link bg-link" href="/admin" title="Admin Portal" data-toggle="tooltip" data-placement="right" data-container="body">
             <span class="icon icon-clipboard"></span>
             <small class="iconav-nav-label hidden-md-up">Admin Portal</small>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'dashboard' %}" title="Dashboard" data-toggle="tooltip" data-placement="right" data-container="body">
-            <span class="icon icon-home"></span>
-            <small class="iconav-nav-label hidden-md-up">Dashboard</small>
+        </li><li class="nav-item">
+          <a class="nav-link bg-link" href="{% url 'sprint_list' %}" title="Sprints" data-toggle="tooltip" data-placement="right" data-container="body">
+            <span class="icon icon-calendar"></span>
+            <small class="iconav-nav-label hidden-md-up">Sprints</small>
           </a>
         </li>
         <li class="nav-item">
