@@ -19,7 +19,9 @@ from .views import (
     SprintDetailView,
     SprintListView,
     done,
-    
+    assign_users,
+    unassign_users,
+    progress,
 )
 
 urlpatterns = [
@@ -36,7 +38,10 @@ urlpatterns = [
     path('<int:pk>/ticket/', TicketDetailView.as_view(), name='ticket_detail'),
     path('<int:pk>/edit-ticket/', TicketUpdateView.as_view(), name='ticket_edit'),
     path('<int:pk>/delete-ticket/', TicketDeleteView.as_view(), name='ticket_delete'),
-    path('done/<int:pk>', views.done, name='complete_status'),
+    path('done/<int:pk>', done, name='complete_status'),
+    path('progress/<int:pk>', progress, name='progress_status'),
+    path('users/<int:pk>', assign_users, name='assign_users'),
+    path('unassign/<int:pk>', unassign_users, name='unassign_users'),
     # Sprints
     path('sprints/', SprintListView.as_view(), name='sprint_list'),
     path('<int:pk>/sprint', SprintDetailView.as_view(), name='sprint_detail'),
