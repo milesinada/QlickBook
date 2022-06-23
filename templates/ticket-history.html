@@ -145,6 +145,7 @@
         <th>Project</th>
         <th>Status</th>
         <th>Difficulty</th>
+        <th>Assigned To</th>
       </tr>
     </thead>
     <tbody>
@@ -157,6 +158,15 @@
         <td>{{ ticket.project}}</td>
         <td>{{ ticket.get_status_display }}</td>
         <td>{{ ticket.get_difficulty_display }}</td>
+        
+        <td>{% for assigned in ticket.assigned_to.all %}
+          <div class="col-sm">
+          {{assigned}}
+        </div>
+        {% endfor %}  
+
+        </td> 
+        
       </tr>
       {% endfor %}
       
