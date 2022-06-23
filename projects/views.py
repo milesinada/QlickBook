@@ -4,9 +4,16 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth import get_user_model
+
+
+# from .forms import UserChoiceForm
 from .models import Project, Ticket, Sprint
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.apps import apps
+CustomUser = apps.get_model('accounts', 'CustomUser')
+
 
 @login_required
 def DashboardPageView(request):  
@@ -138,8 +145,44 @@ def done(request,pk):
     ticket.status = '2'
     ticket.save(update_fields=['status'])
     project= ticket.project.id
-    return redirect(reverse('project_detail', kwargs={'pk':project}))
-    #return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))  This works without refresh in ticket detail!!
+    # return redirect(reverse('project_detail', kwargs={'pk':project}))
+    return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))
+
+@login_required
+def progress(request,pk):
+    ticket = Ticket.objects.get(pk=pk)
+    ticket.status = '1'
+    ticket.save(update_fields=['status'])
+    project= ticket.project.id
+    # return redirect(reverse('project_detail', kwargs={'pk':project})) #This works to redir to project!!
+    return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))  #This works without refresh in ticket detail!!
+
+@login_required
+def assign_users(request,pk):    
+    ticket = Ticket.objects.get(pk=pk)
+    # ticket.assigned_to = []
+    for user_name in request.POST.getlist('assigned_to'):
+        print(user_name)
+        user_object = CustomUser.objects.filter(username=user_name).first()
+        # get the user 
+        ticket.assigned_to.add(user_object)
+        #add instead of appedn because it's a model not a list
+    
+    ticket.save()
+    return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))
+
+@login_required
+def unassign_users(request,pk):    
+    ticket = Ticket.objects.get(pk=pk)
+    for user_name in request.POST.getlist('assigned_to'):
+        print(user_name)
+        user_object = CustomUser.objects.filter(username=user_name).first()
+        # get the user 
+        ticket.assigned_to.remove(user_object)
+        #remove instead of add because it's reverse logic
+    
+    ticket.save()
+    return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))
 
 class TicketListView(LoginRequiredMixin, ListView):
     template_name = 'tickets/ticket-list.html'
@@ -148,12 +191,65 @@ class TicketListView(LoginRequiredMixin, ListView):
 class TicketCreateView(LoginRequiredMixin, CreateView):
     template_name = "tickets/new.html"
     model = Ticket
-    fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'project', 'commentary']
+    # form = UserChoiceForm
+    fields = '__all__'
     success_url = "/projects/{project_id}"
+    # CustomUser = get_user_model()
+    # user_list = CustomUser.objects.values()
+
+    # usernames = CustomUser_values.username
+    # def get_context_data(self, **kwargs):
+    #     CustomUser = get_user_model()
+    #     context = super(TicketCreateView, self).get_context_data(**kwargs)
+    #     context['username'] = CustomUser.objects.values()    
+    #     return context
+    # def get_usernames():
+    #     CustomUser = get_user_model()
+    #     User_list = CustomUser.objects.get()
+    #     for username in User_list:
+    #         print(username)
+    
+    # username = user_list
+    # print(username)
+    # print(username)
+
+# def TicketDetailView(request, pk):
+#     ticket = Ticket.objects.get(pk=pk)
+#     users = CustomUser.objects.all()
+#     user_list = users.all()
+#     instance = {
+#             'user_list' : user_list
+#             }
+#     return render(request, 'tickets/detail.html', instance)
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
     model = Ticket  
+    # form = UserChoiceForm
+    CustomUser = get_user_model()
+    # assigned_users = Ticket.assigned_to
+    # for user_assigned in ticket.assigned_to.all():
+    #     print(user_assigned)
+    # for assigned_users in assigned:
+    # users_list = users_set.all()
+    # print(Ticket.assigned_to)
+    # print(users_set)
+
+    # def get_user_list(self, request):
+    #     users_set = CustomUser.objects.all()
+    #     instance = {
+    #         'users_set': users_set
+    #             }
+    #     return render(request, 'tickets/detail.html', instance)
+
+    def get_context_data(self, **kwargs):
+            CustomUser = get_user_model()
+            context = super(TicketDetailView, self).get_context_data(**kwargs)
+            context['username'] = CustomUser.objects.values()    
+            context["all_users"] = CustomUser.objects.all()
+            return context
+
+
     # Make a function to complete a Ticket. Function based done()
     # def done(request, pk):
     #     ticket = Ticket.objects.get(pk=pk)
@@ -163,7 +259,7 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 class TicketUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "tickets/edit.html"
     model = Ticket
-    fields = '__all__'
+    fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'commentary']
     success_url = "/projects/{project_id}"
 
 

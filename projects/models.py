@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
+# from accounts.models import CustomUser
 
 
 
@@ -12,6 +13,7 @@ from django.utils import timezone
 class Project(models.Model):
     title = models.CharField(max_length=20)
     description = models.TextField(max_length=256)
+    # users = models.ManyToManyField(CustomUser)
     def __str__(self):
         return self.title
     def get_absolute_url(self):
@@ -35,24 +37,16 @@ class Sprint(models.Model):
         return self.title
 
 class Ticket(models.Model):
-    title = models.CharField(max_length=20)
-    
     class DifficultyLevel(models.IntegerChoices):
         EASY = 0, ('Easy')
         NORMAL = 1, ('Normal')
         HARD = 2, ('HARD')
-
     class StatusLevel(models.IntegerChoices):
         NOTSTARTED = 0, ('Not Started')
         PROGRESS = 1, ('In Progress')
         COMPLETED = 2, ('Completed')
-
-
-    author = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE
-    )
-
+    title = models.CharField(max_length=20)
+    author = models.ForeignKey(get_user_model(),on_delete=models.CASCADE)
     dateCreated = models.DateTimeField(default=timezone.now)
     dateResolved = models.DateTimeField(blank = True, null=True)
     difficulty = models.IntegerField(default=DifficultyLevel.EASY, choices=DifficultyLevel.choices)
@@ -60,6 +54,8 @@ class Ticket(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE)
     commentary = models.TextField(max_length=256)
+
+    assigned_to = models.ManyToManyField(get_user_model(), related_name='assigned_users')
     
     def __str__(self):
         return self.title

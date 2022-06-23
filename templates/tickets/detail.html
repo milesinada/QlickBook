@@ -12,14 +12,78 @@
 <div class="col d-flex justify-content-center">
     <div class="card " style="width: 30rem;">
         <div class="card-body">
-        <h1 class="card-title text-dark">{{ ticket.title }}</h1>
+        <h1 class="card-title text-dark">{{ ticket.title }}</h1>        
         <p class="card-text text-dark">{{ ticket.commentary }}</p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">Status: {{ ticket.get_status_display }} 
-            <form method="POST" action="{% url 'complete_status' pk=ticket.pk %}">
-            {% csrf_token %}
-            <button type="submit">Done</button></form>
+        <li class="list-group-item">Status: {{ ticket.get_status_display }}   
+            <div class="col">
+                <form method="POST" action="{% url 'progress_status' pk=ticket.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-warning">In Progress</button> 
+                </form>
+            </div>
+            <div class="col align-self-end">
+                <form method="POST" action="{% url 'complete_status' pk=ticket.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-primary">Done</button>
+                </form>
+            </div> 
+        </li>
+        <li class="list-group-item"><b>Assigned to : </b>
+            <div class="container">
+            {% for assigned in ticket.assigned_to.all %}
+            <u>{{assigned}}</u> 
+            {% endfor %}
+            </div>
+                <div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="card-link dropdown-toggle">
+                    Assign Users<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                    <form method="POST" action="{% url 'assign_users' pk=ticket.pk %}">
+                        {% csrf_token %}
+                        <div class="col-sm">
+                            <div class="row">
+                                {% for user in all_users %}
+                                <li><input type="checkbox" id="{{user.id}}" name="assigned_to" value="{{user.username}}" >
+                                <label class="checkbox text-dark">{{user.username}}</label></li>
+                            </div>
+                            <div class="w-200">
+                            {% empty %}
+                            <p>no users to select</p>
+                            {% endfor %}     
+                        </div>
+                        <div class="container">
+                            <button type="submit" class="btn btn-sm btn-primary">Assign</button>
+                        </div>
+                    </form>
+                    </ul>
+                </div>
+                <div class="dropdown col align-self-end">
+                    <a href="#" data-toggle="dropdown" class="card-link dropdown-toggle">
+                    Remove Users<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                    <form method="POST" action="{% url 'unassign_users' pk=ticket.pk %}">
+                        {% csrf_token %}
+                        <div class="col-sm">
+                            <div class="row">
+                                {% for assigned in ticket.assigned_to.all %}
+                                <li><input type="checkbox" id="{{assigned.id}}" name="assigned_to" value="{{assigned.username}}" >
+                                <label class="checkbox text-dark">{{assigned}}</label></li>
+                            </div>
+                            <div class="w-200">
+                            {% empty %}
+                            <p>no users to remove</p>
+                            {% endfor %}     
+                        </div>
+                        <div class="container">
+                            <button type="submit" class="btn btn-sm btn-primary">Assign</button>
+                        </div>
+                    </form>
+                    </ul>
+                </div>
         </li>
         <li class="list-group-item">Difficulty: {{ ticket.get_difficulty_display }}</li>
         <li class="list-group-item">Date Created: {{ ticket.dateCreated }}</li>
