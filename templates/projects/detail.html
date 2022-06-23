@@ -172,6 +172,34 @@
     </div>
 
     <hr class="my-4">
+    
+    <div class="col-lg-14 mx-auto">
+      <div class="list-group mx-auto">
+        <h6 class="list-group-header">
+          Current Sprint
+        </h6>
+        
+          <a class="list-group-item list-group-item-action justify-content-between" href="#">
+            <span class="list-group-progress" style="width: {{count|length}}% ;"></span>
+            <span>Current Sprint</span>
+            {% comment %} <span class="text-muted"> {% with sprint={{count|length}} %}
+              {% with progress={{count[2]|length}} %}
+              {{ sprint }} / {{ progress }} %
+              {{ sprint }} % {{ progress }}
+              {% endwith %} {% endcomment %}
+              %</span>
+          </a>
+        
+            {% for record in sprints_tasks %}
+              <h4>{{record.sprint.id}} {{record.sprint.title}} {{record.tickets|length}}</h4>
+            {% endfor %}
+        
+          
+          </a>
+        
+      </div>
+      <a href="#" class="btn btn-outline-primary px-3">All countries</a>
+    </div>
 
     <div class="row">
       <div class="col-lg-4 mb-5">
