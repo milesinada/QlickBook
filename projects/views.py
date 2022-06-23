@@ -83,6 +83,22 @@ def ProjectDetailView(request, pk):
             instance['count'][1] += 1
         elif ticket.status == 0:
             instance['count'][2] += 1
+
+    
+    # assign the tickets to every sprint  
+    sprint_list_with_tasks = []
+    for sprint in sprint_list:
+        print(sprint.title)
+        sprint_tickets = Ticket.objects.filter(sprint=sprint)
+        record = { "sprint": sprint }
+        record["tickets"] = sprint_tickets
+        sprint_list_with_tasks.append(record)
+    
+
+    instance["sprints_tasks"] = sprint_list_with_tasks
+
+    # data_count = instance.count[0]
+    # print(data_count)
     return render(request, 'projects/detail.html', instance)
 
 # class ProjectDetailView(LoginRequiredMixin, DetailView):
