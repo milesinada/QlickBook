@@ -4,6 +4,109 @@
 {% block title %}Sprint Detail{% endblock title %}
 
 {% block content %}
-    <h1>{{sprint.title}}</h1>
+<div class="col d-flex justify-content-center">
+    <div class="card " style="width: 30rem;">
+        <div class="card-body">
+        <h1 class="card-title text-dark">{{ sprint.title }}</h1>        
+        <p class="card-text text-dark">{{ sprint.end_date }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Status: {{ sprint.get_milestone_display }}   
+            <div class="col align-self-end">
+                {% if sprint.milestone < 4 %}
+                <form method="POST" action="{% url 'next_milestone' pk=sprint.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-primary">Next Milestone</button>
+                </form>
+                {% endif %}
+            </div> 
+        </li>
+        <li class="list-group-item">Start Date: {{ sprint.start_date }}</li>
+        <li class="list-group-item">End Date: {{ sprint.end_date }}</li>
+        <li class="list-group-item">Project: {{ sprint.project }}</li>
+        <li class="list-group-item">Tickets:
+            <div class="container">
+            {% for ticket in ticket_list %}
+            <p>{{ticket}}</p>
+            {% empty %}
+            no tickets in this sprint
+            {% endfor %}    
+            </div></li>
+        <li class="list-group-item">Add Tickets:
+            <div class="dropdown">
+                <a href="#" data-toggle="dropdown" class="card-link dropdown-toggle">
+                Add Ticket<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                <form method="POST" action="{% url 'assign_tickets' pk=sprint.pk %}">
+                    {% csrf_token %}
+                    <div class="col-sm">
+                        <div class="row">
+                            {% for ticket in project_tickets %}
+                            <li><input type="checkbox" id="{{ticket.id}}" name="tickets" value="{{ticket.title}}" >
+                            <label class="checkbox text-dark">{{ticket.title}}</label></li>
+                        </div>
+                        <div class="w-200">
+                        {% empty %}
+                        <p>no tickets to select</p>
+                        {% endfor %}     
+                    </div>
+                    <div class="container">
+                        <button type="submit" class="btn btn-sm btn-primary">Assign</button>
+                    </div>
+                </form>
+                </ul>
+            </div>
+            <div class="dropdown col align-self-end">
+                <a href="#" data-toggle="dropdown" class="card-link text-danger dropdown-toggle">
+                Remove Tickets<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                <form method="POST" action="{% url 'unassign_tickets' pk=sprint.pk %}">
+                    {% csrf_token %}
+                    <div class="col-sm">
+                        <div class="row">
+                            {% for ticket in ticket_list %}
+                            <li><input type="checkbox" id="{{ticket.id}}" name="tickets" value="{{ticket.title}}" >
+                            <label class="checkbox text-dark">{{ticket}}</label></li>
+                        </div>
+                        <div class="w-200">
+                        {% empty %}
+                        <p>no tickets to remove</p>
+                        {% endfor %}     
+                    </div>
+                    <div class="container">
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    </div>
+                </form>
+                </ul>
+            </div> {{ sprint.project }}</li>
+        <li class="list-group-item">Total Tickets:
+            {% for tickets in ticket_list %} {{ count }}{% endfor %}</li>
+    </ul>
+    <p class="card-text text-muted">Created by: {{ sprint.created_by }}</p>
+        <div class="card-body">
+        <a href="{% url 'project_detail' sprint.project.id %}" class="card-link icon icon-back"></a>
+        <a href="{% url 'sprint_edit' sprint.id %}" class="card-link">Edit Sprint</a>
+        <a href="{% url 'sprint_delete' sprint.id %}" class="card-link text-danger">Delete</a>
+        </div>
+</div>
+<p>Current Milestone: {{sprint.get_milestone_display}}</p>
+{% for milestone in complete_milestones %}
+<p>
+    milestone: {{milestone.number}} |
+    tickets compeleted : {{milestone.tickets}}
+    
+</p>
+{% endfor %}
+
+
+
 
 {% endblock content %}
+<!-- <h1>{{sprint.title}}</h1>
+{% for ticket in ticket_list %}
+<p><a href="{% url 'ticket_detail' ticket.id %}">{{ticket.title}}</a></p>
+{% endfor %}
+<p>{{ticket.project}}</p>
+<a class="btn btn-primary btn-sm" href="{% url 'sprint_edit' sprint.id %}">Edit</a> -->
