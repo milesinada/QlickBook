@@ -61,7 +61,7 @@
                     </ul>
                 </div>
                 <div class="dropdown col align-self-end">
-                    <a href="#" data-toggle="dropdown" class="card-link dropdown-toggle">
+                    <a href="#" data-toggle="dropdown" class="card-link text-danger dropdown-toggle">
                     Remove Users<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
@@ -79,17 +79,20 @@
                             {% endfor %}     
                         </div>
                         <div class="container">
-                            <button type="submit" class="btn btn-sm btn-primary">Assign</button>
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                         </div>
                     </form>
                     </ul>
                 </div>
         </li>
         <li class="list-group-item">Difficulty: {{ ticket.get_difficulty_display }}</li>
+        <li class="list-group-item">Sprint: {{ ticket.sprint }}</li>
         <li class="list-group-item">Date Created: {{ ticket.dateCreated }}</li>
+        <li class="list-group-item">Date Resolved: {{ ticket.dateResolved }}</li>
     </ul>
     <p class="card-text text-muted">Created by: {{ ticket.author }}</p>
         <div class="card-body">
+        <a href="{% url 'project_detail' ticket.project.id %}" class="card-link icon icon-back"></a>
         <a href="{% url 'ticket_edit' ticket.id %}" class="card-link">Edit Ticket</a>
         <a href="{% url 'ticket_delete' ticket.id %}" class="card-link text-danger">Delete</a>
         </div>

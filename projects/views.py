@@ -5,6 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from datetime import datetime
+
 
 
 # from .forms import UserChoiceForm
@@ -142,17 +145,20 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
 @login_required
 def done(request,pk):
     ticket = Ticket.objects.get(pk=pk)
+    ticket.dateResolved = datetime.now()
     ticket.status = '2'
-    ticket.save(update_fields=['status'])
-    project= ticket.project.id
-    # return redirect(reverse('project_detail', kwargs={'pk':project}))
+    ticket.milestone_resolved = ticket.sprint.milestone
+    ticket.save(update_fields=['status','dateResolved','milestone_resolved'])
     return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))
+    # project= ticket.project.id
+    # return redirect(reverse('project_detail', kwargs={'pk':project}))
 
 @login_required
 def progress(request,pk):
     ticket = Ticket.objects.get(pk=pk)
     ticket.status = '1'
-    ticket.save(update_fields=['status'])
+    ticket.dateResolved = None
+    ticket.save(update_fields=['status','dateResolved'])
     project= ticket.project.id
     # return redirect(reverse('project_detail', kwargs={'pk':project})) #This works to redir to project!!
     return redirect(reverse('ticket_detail', kwargs={'pk':ticket.pk}))  #This works without refresh in ticket detail!!
@@ -192,7 +198,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     template_name = "tickets/new.html"
     model = Ticket
     # form = UserChoiceForm
-    fields = '__all__'
+    fields = ['title','author','dateCreated','difficulty','project','commentary']
     success_url = "/projects/{project_id}"
     # CustomUser = get_user_model()
     # user_list = CustomUser.objects.values()
@@ -242,6 +248,8 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
     #             }
     #     return render(request, 'tickets/detail.html', instance)
 
+
+
     def get_context_data(self, **kwargs):
             CustomUser = get_user_model()
             context = super(TicketDetailView, self).get_context_data(**kwargs)
@@ -259,7 +267,7 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 class TicketUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "tickets/edit.html"
     model = Ticket
-    fields = ['title', 'author', 'dateCreated', 'dateResolved', 'difficulty', 'status', 'commentary']
+    fields = ['title', 'author', 'dateCreated', 'dateResolved', 'sprint', 'project', 'difficulty', 'status', 'commentary']
     success_url = "/projects/{project_id}"
 
 
@@ -270,19 +278,96 @@ class TicketDeleteView(LoginRequiredMixin, DeleteView):
 
 #------------------- Sprints Views -----------------------------
 
-class SprintListView(LoginRequiredMixin, ListView):
-    template_name = 'sprints/list.html'
+@login_required
+def assign_tickets(request,pk):    
+    sprint = Sprint.objects.get(pk=pk)
+    # ticket.assigned_to = []
+    for ticket in request.POST.getlist('tickets'):
+        ticket_object = Ticket.objects.filter(title=ticket).first()
+        # get the user 
+        ticket_object.sprint = sprint
+        #add instead of appedn because it's a model not a list
+    
+    ticket_object.save()
+    return redirect(reverse('sprint_detail', kwargs={'pk':sprint.pk}))
+
+@login_required
+def unassign_tickets(request,pk):    
+    sprint = Sprint.objects.get(pk=pk)
+    for ticket in request.POST.getlist('tickets'):
+        ticket_object = Ticket.objects.filter(title=ticket).first()
+        # get the user 
+        ticket_object.sprint = None
+        #remove instead of add because it's reverse logic
+    
+    ticket_object.save()
+    return redirect(reverse('sprint_detail', kwargs={'pk':sprint.pk}))
+
+@login_required
+def next_milestone(request,pk):
+    sprint = Sprint.objects.get(pk=pk)
+    sprint.milestone += 1
+    # next = current+1
+    # current = sprint.next
+    sprint.save(update_fields=['milestone'])
+    return redirect(reverse('sprint_detail', kwargs={'pk':sprint.pk})) 
+
+class SprintListView(LoginRequiredMixin,ListView):
+    template_name = "sprints/list.html"
     model = Sprint
+    
+
+# @login_required
+# def SprintListView(request):
+#     sprint_list = Sprint.objects.all()
+#     sprint_list_with_tasks = []
+#     for sprint in sprint_list:
+#         print(sprint.title)
+#         sprint_tickets = Ticket.objects.filter(sprint=sprint)
+#         record = { "sprint": sprint }
+#         record["tickets"] = sprint_tickets
+#         sprint_list_with_tasks.append(record)
+    
+#     instance = {
+#         'count' : [0,0,0],
+#         'title' : sprint.title,
+#         'id' : sprint.id,
+#         'sprint_list' : sprint_list
+#         }
+
+#     instance["sprints_tasks"] = sprint_list_with_tasks
+
+#     # data_count = instance.count[0]
+#     # print(data_count)
+#     return render(request, 'sprints/list.html', instance)
 
 class SprintCreateView(LoginRequiredMixin, CreateView):
     template_name = "sprints/new.html"
     model = Sprint
     fields = '__all__'
-    success_url = "/projects/{project_id}"
+    success_url = "/projects/sprints"
 
 class SprintDetailView(LoginRequiredMixin, DetailView):
     template_name = "sprints/detail.html"
     model = Sprint  
+
+    def get_queryset(self):
+        return Sprint.objects.filter(id=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super(SprintDetailView, self).get_context_data(**kwargs)
+        context["ticket_list"] = Ticket.objects.filter(sprint_id=self.kwargs['pk'])
+        context["project_tickets"] = Ticket.objects.filter(project_id=self.kwargs['pk'])
+        context['complete_milestones'] = []
+        sprint = Sprint.objects.get(id=self.kwargs['pk'])
+        for n in range(1,sprint.milestone+1):
+            completed = Ticket.objects.filter(milestone_resolved=n,sprint_id=sprint.id).count()
+            item = {
+                'number' : n,
+                'tickets' : completed, 
+            }
+            context['complete_milestones'].append(item)
+        return context
 
     # Need to have a list of Tickets and correlating Project
 
@@ -290,7 +375,8 @@ class SprintUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "sprints/edit.html"
     model = Sprint
     fields = '__all__'
-    success_url = "/projects/{project_id}"
+    success_url = "/projects/{id}/sprint"
+
 
 
 class SprintDeleteView(LoginRequiredMixin, DeleteView):

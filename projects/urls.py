@@ -22,12 +22,15 @@ from .views import (
     assign_users,
     unassign_users,
     progress,
+    next_milestone,
+    assign_tickets,
+    unassign_tickets,
 )
 
 urlpatterns = [
-    path('', views.DashboardPageView, name='dashboard'),
+    path('', DashboardPageView, name='dashboard'),
     # Projects
-    path('list/', views.ProjectListView, name='project_list'),
+    path('list/', ProjectListView, name='project_list'),
     path('<int:pk>/', ProjectDetailView, name='project_detail'),
     path('new-project/', ProjectCreateView.as_view(), name='project_new'),
     path('<int:pk>/edit-project/', ProjectUpdateView.as_view(), name='project_edit'),
@@ -48,5 +51,8 @@ urlpatterns = [
     path('new-sprint/', SprintCreateView.as_view(), name='sprint_new'),
     path('<int:pk>/edit-sprint/', SprintUpdateView.as_view(), name='sprint_edit'),
     path('<int:pk>/delete-sprint/', SprintDeleteView.as_view(), name='sprint_delete'),
+    path('next_milestone/<int:pk>', next_milestone, name='next_milestone'),
+    path('assign_tickets/<int:pk>', assign_tickets, name='assign_tickets'),
+    path('unassign_tickets/<int:pk>', unassign_tickets, name='unassign_tickets'),
 
 ]

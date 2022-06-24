@@ -145,6 +145,7 @@
         <th>Project</th>
         <th>Status</th>
         <th>Difficulty</th>
+        <th>Sprint</th>
         <th>Assigned To</th>
       </tr>
     </thead>
@@ -158,6 +159,7 @@
         <td>{{ ticket.project}}</td>
         <td>{{ ticket.get_status_display }}</td>
         <td>{{ ticket.get_difficulty_display }}</td>
+        <td>{{ ticket.sprint }}</td>
         
         <td>{% for assigned in ticket.assigned_to.all %}
           <div class="col-sm">
