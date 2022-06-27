@@ -1,6 +1,6 @@
 h1{
     text-align: center;
-    color: black;
+    color: rgb(255, 255, 255);
 }
 main{
     display: flex;
@@ -9,9 +9,15 @@ main{
     flex: 2;
     margin: 2%;
 }
+.card{
+    margin: 1%;
+    color: rgb(248, 248, 248);
+    background-color: transparent;
+    border: solid 1px transparent;
+}
 .signin{
     flex: 1;
-    border: 1px solid black;
+    align-content: center;
     margin: 2% 2%;
     padding: 1%;
 }
@@ -24,7 +30,6 @@ main{
         margin: 2%;
     }
     .signin{
-        border: 1px solid black;
         margin: 2%;
         padding: 1%;
     }

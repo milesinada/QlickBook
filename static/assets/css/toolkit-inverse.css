@@ -3212,9 +3212,7 @@ tbody.collapse.show {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem; }
+}
 
 .card-block {
   -webkit-box-flex: 1;
