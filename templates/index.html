@@ -4,16 +4,51 @@
 {% block title %}QlickBooks{% endblock title %}
 
 {% block content %}
-  
-    <div class="intro">
-      <h1>QlickBooks</h1> 
-        <p>Welcome to QlickBooks, our application is directed towards breaking down every task that needs to be completed in order to keep all your team members on track. We highly encourage you to share our amazing app with your friends or boss that needs a little help organizing tasks!</p> 
+<div class="col-md-9 content">
+  <div class="signin col text-center">
+    <a href="/accounts/login" class="btn btn-primary">LogIn</a>
+    <a href="/accounts/signup" class="btn btn-warning">Signup</a>
+  </div>
+  <div class="intro">
+    <h1>QlickBooks</h1>
+    <p>Welcome to QlickBooks, our application is directed towards breaking down every task that needs to be completed in
+      order to keep all your team members on track. We highly encourage you to share our amazing app with your friends
+      or
+      boss that needs a little help organizing tasks!</p>
+
+    <div class="row">
+      <div class="card " style="width: 11rem;">
+        <div class="card-body">
+          <h4 class="card-title text-light">Deadlines</h4>
+          <li>Smash Deadlines with a SCRUM feel</li>
+        </div>
+      </div>
+      <div class="card " style="width: 10rem;">
+        <div class="card-body">
+          <h4 class="card-title text-light">Projects</h4>
+          <li>Create Projects that will make your business thrive in todays market</li>
+        </div>
+      </div>
+      <div class="card " style="width: 10rem;">
+        <div class="card-body">
+          <h4 class="card-title text-light">Tickets</h4>
+          <li>Create tickets/task that you're team will be able to effectively handle</li>
+        </div>
+      </div>
+      <div class="w-100"></div>
+      <div class="card " style="width: 10rem;">
+        <div class="card-body">
+          <h4 class="card-title text-light">Sprints</h4>
+          <li>Design Sprints to make sure you're team is on track and know exactly what needs to be done next</li>
+        </div>
+      </div>
+      <div class="card " style="width: 10rem;">
+        <div class="card-body">
+          <h4 class="card-title text-light">Assign</h4>
+          <li>Assign your tema members to specific tickets to make sure there are no conflicts with those merges!</li>
+        </div>
+      </div>
     </div>
-    <div class="signin">
-      <h1>Welcome!</h1>
-      <a href="/accounts/login" class="btn btn-primary">LogIn</a>
-      <p>or</p>
-      <a href="/accounts/signup" class="btn btn-warning">Signup</a>
-    </div>
-  
-{% endblock content %}
+
+  </div>
+  {% endblock content %}

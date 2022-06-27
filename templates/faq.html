@@ -1,15 +1,123 @@
-{% extends 'base.html' %}
-
-
-{% block content %}
-<div class="col-md-9 content">
+{% extends 'base.html' %} {% block content %}
+<div class="cli-md-9 content col container">
     <h1>How to Do things</h1>
     <h5>Frequently Asked Questions</h5>
-    <ul>Steps to Create a project</ul>
-    <ul>Steps to Create a task</ul>
-    <ul>Steps to add people to each task</ul>
-    <ul>How to delete a task</ul>
-    <ul>How to delete a project</ul>
+    <div class="accordion w-40" id="basicAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-toggle="collapse"
+                    data-target="#basicAccordionCollapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Create a Sprint
+                </button>
+            </h2>
+            <div id="basicAccordionCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                data-parent="#basicAccordion" style="">
+                <div class="accordion-body text-dark">
+                    <ol>
+                        Steps to create a sprint
+                    </ol>
+                    <li>On the Project page under the ticket table click "New Sprint"</li>
+                    <li>Enter sprint details</li>
+                    <li>
+                        Assign tickets on the sprint detail page or the ticket creation page
+                    </li>
+                    <li>Voila, time to start the grind!</li>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-toggle="collapse"
+                    data-target="#basicAccordionCollapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Create a project
+                </button>
+            </h2>
+            <div id="basicAccordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-parent="#basicAccordion" style="">
+                <div class="accordion-body text-dark">
+                    <ol>
+                        Steps to Create a project
+                    </ol>
+                    <li>
+                        If no projects have been created yet, you'll have a promt on the
+                        main dahsboard to create a new project. If you have created a
+                        project already, you can click on the "New Project" icon in the
+                        Navagation Bar
+                    </li>
+                    <li>Add the basic information for you're project.</li>
+                    <li>Create Tickets for the project</li>
+                    <li>Create a Sprint</li>
+                    <li>Start slaying those tickets!</li>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-toggle="collapse"
+                    data-target="#basicAccordionCollapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Create a task
+                </button>
+            </h2>
+            <div id="basicAccordionCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-parent="#basicAccordion" style="">
+                <div class="accordion-body text-dark">
+                    <ol>
+                        Steps to create a Ticket
+                    </ol>
+                    <li>
+                        In the project you want to add a ticket, press the "Add Ticket"
+                        button
+                    </li>
+                    <li>Input the information you want to add</li>
+                    <li>In the Ticket detail page you can further add users</li>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-toggle="collapse"
+                    data-target="#basicAccordionCollapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Create a new user
+                </button>
+            </h2>
+            <div id="basicAccordionCollapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-parent="#basicAccordion" style="">
+                <div class="accordion-body text-dark">
+                    <ol>
+                        Steps to create a User
+                    </ol>
+                    <li>On the Navagation bar click "Admin Panel"</li>
+                    <li>Select the "Users" link</li>
+                    <li>Select "Add User"</li>
+                    <li>Input User information</li>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-toggle="collapse"
+                    data-target="#basicAccordionCollapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Delete a User
+                </button>
+            </h2>
+            <div id="basicAccordionCollapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                data-parent="#basicAccordion" style="">
+                <div class="accordion-body text-dark">
+                    <ol>
+                        Steps to Delete a User
+                    </ol>
+                    <li>On the Navagation bar click "Admin Panel"</li>
+                    <li>Select the "Users" link</li>
+                    <li>
+                        Select the user you want to remove with the checkbox next to their
+                        name
+                    </li>
+                    <li>On the drop down action select delete and confirm</li>
+                    <li>Any Ticket or Project created by this user will be removed</li>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
