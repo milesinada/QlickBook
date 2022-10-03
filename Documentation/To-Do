@@ -12,22 +12,22 @@
 <!-- Ticket Status update
 -Ticket shoudl be editable from project detail and Ticket detail -->
 
-User model
+<!-- User model
 -Should have a way to seperate Owner/Manager/Staff
 -Should have access blocks on what Staff can see vs manager vs owner
 -Owner Full Access As we see site now
 -Manager Cannot Create Projects only Tickets
 -Staff/Employee can only mark Tickets as completed
--User needs to only access their corresponding data (made projects)
+-User needs to only access their corresponding data (made projects) -->
 
-Project Detail
--Estimated amount of sprints to ->
+<!-- Project Detail
+-Estimated amount of sprints to -> -->
 
-Sprint Model
+<!-- Sprint Model
 -Project detail will see sprint model
 -Start/End date
 -ListofTickets (backlog)
--Devs assigned
+-Devs assigned -->
 
 SCRUM standout (optional )
 Burn down chart

@@ -230,7 +230,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     template_name = "tickets/detail.html"
-    model = Ticket  
+    model = Ticket
     # form = UserChoiceForm
     CustomUser = get_user_model()
     # assigned_users = Ticket.assigned_to
